@@ -8,10 +8,12 @@ public sealed class InitTerrainSystem : IInitializeSystem {
   }
 
   public void Initialize() {
-    for (var i = 0; i < 8; i++) {
-      for (var j = 0; j < 8; j++) {
+    var mapSize = context.globals.value.mapSize;
+    var tileSize = context.globals.value.tileSize;
+    for (var i = 0; i < mapSize; i++) {
+      for (var j = 0; j < mapSize; j++) {
         var entity = context.CreateEntity();
-        entity.AddPosition(i, 1, j);
+        entity.AddPosition(i * tileSize, 0, j * tileSize);
         entity.AddAsset("Prefabs/Cube");
       }
     }
