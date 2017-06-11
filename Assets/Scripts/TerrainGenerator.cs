@@ -13,7 +13,7 @@ public class TerrainGenerator {
     this.mapSize = mapSize;
     this.tileSize = tileSize;
 
-    var sand = Resources.Load<Texture2D>("Textures/Terrain/sand");
+    var sand = Resources.Load<Texture2D>("Textures/Terrain/sand3");
     var dust = Resources.Load<Texture2D>("Textures/Terrain/sand2");
 
     splats = new SplatPrototype[2];

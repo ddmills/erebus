@@ -9,9 +9,28 @@ public sealed class InitMountainSystem : IInitializeSystem {
   }
 
   public void Initialize() {
+    var mapSize = this.context.globals.value.mapSize;
+    for (var y = 0; y < mapSize; y++) {
+      for (var x = 0; x < mapSize; x++) {
+        var height = Height(x, y);
+
+        if (height > .5f) {
+          CreateMountain(x, y);
+        }
+      }
+    }
+  }
+
+  private void CreateMountain(int x, int y) {
     var mountain = context.CreateEntity();
     mountain.AddAsset("Prefabs/Cube");
-    mountain.AddPosition(1, 0, 1);
+    mountain.AddPosition(x, 0, y);
     mountain.isSnappedToTile = true;
+  }
+
+  private float Height(float x, float y) {
+    var perlinX = this.context.globals.value.seed + 1000 + x / 15f;
+    var perlinY = this.context.globals.value.seed + 1000 + y / 15f;
+    return Mathf.PerlinNoise(perlinX, perlinY);
   }
 }
