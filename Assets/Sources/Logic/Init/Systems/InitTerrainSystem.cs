@@ -8,13 +8,14 @@ public sealed class InitTerrainSystem : IInitializeSystem {
   public InitTerrainSystem(Contexts contexts) {
     context = contexts.game;
     generator = new TerrainGenerator(
+      context.globals.value.seed,
       context.globals.value.mapSize,
       context.globals.value.tileSize
     );
   }
 
   public void Initialize() {
-    var terrain = generator.Generate(context.globals.value.seed);
+    var terrain = generator.Generate();
     Terrain.CreateTerrainGameObject(terrain);
   }
 }
