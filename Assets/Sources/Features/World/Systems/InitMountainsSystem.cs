@@ -12,6 +12,6 @@ public sealed class InitMountainSystem : IInitializeSystem {
     var mountain = context.CreateEntity();
     mountain.AddAsset("Prefabs/Cube");
     mountain.AddPosition(1, 0, 1);
-    mountain.isSnapToTile = true;
+    mountain.isSnappedToTile = true;
   }
 }

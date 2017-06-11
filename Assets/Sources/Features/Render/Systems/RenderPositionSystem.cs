@@ -17,7 +17,7 @@ public sealed class RenderPositionSystem : ReactiveSystem<GameEntity> {
   protected override void Execute(List<GameEntity> entities) {
     foreach (var entity in entities) {
       var position = entity.position;
-      if (entity.isSnapToTile) {
+      if (entity.isSnappedToTile) {
         var tileSize = (float) Contexts.sharedInstance.game.globals.value.tileSize;
 
         var snappedPosition = new Vector3(

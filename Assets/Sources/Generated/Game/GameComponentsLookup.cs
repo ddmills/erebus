@@ -12,7 +12,7 @@ public static class GameComponentsLookup {
     public const int Destroyed = 1;
     public const int Globals = 2;
     public const int Position = 3;
-    public const int SnapToTile = 4;
+    public const int SnappedToTile = 4;
     public const int View = 5;
 
     public const int TotalComponents = 6;
@@ -22,7 +22,7 @@ public static class GameComponentsLookup {
         "Destroyed",
         "Globals",
         "Position",
-        "SnapToTile",
+        "SnappedToTile",
         "View"
     };
 
@@ -31,7 +31,7 @@ public static class GameComponentsLookup {
         typeof(DestroyedComponent),
         typeof(GlobalsComponent),
         typeof(PositionComponent),
-        typeof(SnapToTileComponent),
+        typeof(SnappedToTileComponent),
         typeof(ViewComponent)
     };
 }

@@ -8,16 +8,16 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    static readonly SnapToTileComponent snapToTileComponent = new SnapToTileComponent();
+    static readonly SnappedToTileComponent snappedToTileComponent = new SnappedToTileComponent();
 
-    public bool isSnapToTile {
-        get { return HasComponent(GameComponentsLookup.SnapToTile); }
+    public bool isSnappedToTile {
+        get { return HasComponent(GameComponentsLookup.SnappedToTile); }
         set {
-            if (value != isSnapToTile) {
+            if (value != isSnappedToTile) {
                 if (value) {
-                    AddComponent(GameComponentsLookup.SnapToTile, snapToTileComponent);
+                    AddComponent(GameComponentsLookup.SnappedToTile, snappedToTileComponent);
                 } else {
-                    RemoveComponent(GameComponentsLookup.SnapToTile);
+                    RemoveComponent(GameComponentsLookup.SnappedToTile);
                 }
             }
         }
@@ -34,17 +34,17 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherSnapToTile;
+    static Entitas.IMatcher<GameEntity> _matcherSnappedToTile;
 
-    public static Entitas.IMatcher<GameEntity> SnapToTile {
+    public static Entitas.IMatcher<GameEntity> SnappedToTile {
         get {
-            if (_matcherSnapToTile == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.SnapToTile);
+            if (_matcherSnappedToTile == null) {
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.SnappedToTile);
                 matcher.componentNames = GameComponentsLookup.componentNames;
-                _matcherSnapToTile = matcher;
+                _matcherSnappedToTile = matcher;
             }
 
-            return _matcherSnapToTile;
+            return _matcherSnappedToTile;
         }
     }
 }
