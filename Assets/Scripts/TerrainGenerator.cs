@@ -37,9 +37,11 @@ public class TerrainGenerator {
     terrain.size = new Vector3(mapSize * 10 * tileSize, 0, mapSize * 10 * tileSize);
     terrain.splatPrototypes = splats;
 
-    var splatmap = new float[terrain.alphamapWidth, terrain.alphamapHeight, terrain.alphamapLayers];
-
-    Debug.Log(terrain.alphamapWidth);
+    var splatmap = new float[
+      terrain.alphamapWidth,
+      terrain.alphamapHeight,
+      terrain.alphamapLayers
+    ];
 
     for (var y = 0; y < terrain.alphamapHeight; y++) {
       for (var x = 0; x < terrain.alphamapWidth; x++) {
