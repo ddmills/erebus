@@ -3,10 +3,12 @@ using UnityEngine;
 public class TerrainGenerator {
   int seed;
   int mapSize;
+  float scale;
   float tileSize;
   SplatPrototype[] splats;
 
   public TerrainGenerator(int seed, int mapSize, float tileSize) {
+    scale = 5;
     this.seed = seed;
     this.mapSize = mapSize;
     this.tileSize = tileSize;
@@ -26,15 +28,15 @@ public class TerrainGenerator {
   }
 
   private float Height(float x, float y) {
-    var perlinX = seed + 1000 + x * mapSize;
-    var perlinY = seed + 1000 + y * mapSize;
+    var perlinX = seed + 1000 + x * mapSize / scale;
+    var perlinY = seed + 1000 + y * mapSize / scale;
 
     return Mathf.PerlinNoise(perlinX, perlinY);
   }
 
   public TerrainData Generate() {
     var terrain = new TerrainData();
-    terrain.size = new Vector3(mapSize * 10 * tileSize, 0, mapSize * 10 * tileSize);
+    terrain.size = new Vector3(mapSize * tileSize, 0, mapSize * tileSize);
     terrain.splatPrototypes = splats;
 
     var splatmap = new float[

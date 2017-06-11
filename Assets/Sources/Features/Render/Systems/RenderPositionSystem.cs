@@ -17,7 +17,19 @@ public sealed class RenderPositionSystem : ReactiveSystem<GameEntity> {
   protected override void Execute(List<GameEntity> entities) {
     foreach (var entity in entities) {
       var position = entity.position;
-      entity.view.gameObject.transform.position = new Vector3(position.x, position.y, position.z);
+      if (entity.isSnapToTile) {
+        var tileSize = (float) Contexts.sharedInstance.game.globals.value.tileSize;
+
+        var snappedPosition = new Vector3(
+          Mathf.Floor(position.x / tileSize) + tileSize / 2,
+          position.y,
+          Mathf.Floor(position.z / tileSize) + tileSize / 2
+        );
+
+        entity.view.gameObject.transform.position = snappedPosition;
+      } else {
+        entity.view.gameObject.transform.position = new Vector3(position.x, position.y, position.z);
+      }
     }
   }
 }
