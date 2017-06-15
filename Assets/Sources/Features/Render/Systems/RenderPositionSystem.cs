@@ -18,7 +18,7 @@ public sealed class RenderPositionSystem : ReactiveSystem<GameEntity> {
     foreach (var entity in entities) {
       var position = entity.position;
       if (entity.isSnappedToTile) {
-        var tileSize = (float) Contexts.sharedInstance.game.globals.value.tileSize;
+        var tileSize = (float) Contexts.sharedInstance.game.config.value.tileSize;
 
         var snappedPosition = new Vector3(
           Mathf.Floor(position.x / tileSize) + tileSize / 2,

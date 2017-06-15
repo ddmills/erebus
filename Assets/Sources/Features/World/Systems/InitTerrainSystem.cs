@@ -9,9 +9,9 @@ public sealed class InitTerrainSystem : IInitializeSystem {
   }
 
   public void Initialize() {
-    var seed = context.globals.value.seed;
-    var mapSize = context.globals.value.mapSize;
-    var tileSize = context.globals.value.tileSize;
+    var seed = context.config.value.seed;
+    var mapSize = context.config.value.mapSize;
+    var tileSize = context.config.value.tileSize;
     var sand = Resources.Load<Texture2D>("Textures/Terrain/sand3");
     var dust = Resources.Load<Texture2D>("Textures/Terrain/sand2");
     var splats = new SplatPrototype[2];
@@ -60,8 +60,8 @@ public sealed class InitTerrainSystem : IInitializeSystem {
   }
 
   private float Height(float x, float y) {
-    var perlinX = context.globals.value.seed + 1000 + x / 15f;
-    var perlinY = context.globals.value.seed + 1000 + y / 15f;
+    var perlinX = context.config.value.seed + 1000 + x / 15f;
+    var perlinY = context.config.value.seed + 1000 + y / 15f;
     return Mathf.PerlinNoise(perlinX, perlinY);
   }
 }

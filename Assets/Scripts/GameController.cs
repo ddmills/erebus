@@ -2,14 +2,14 @@
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
-  public Globals globals;
+  public Config config;
   Systems systems;
 
   void Start() {
     Contexts contexts = Contexts.sharedInstance;
 
-    contexts.game.SetGlobals(globals);
-    Random.InitState(globals.seed);
+    contexts.game.SetConfig(config);
+    Random.InitState(config.seed);
 
     systems = createSystems(contexts);
     systems.Initialize();

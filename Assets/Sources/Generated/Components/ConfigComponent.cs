@@ -7,6 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 [Game][Entitas.CodeGeneration.Attributes.UniqueAttribute]
-public sealed partial class GlobalsComponent : Entitas.IComponent {
-    public Globals value;
+public sealed partial class ConfigComponent : Entitas.IComponent {
+    public Config value;
 }
