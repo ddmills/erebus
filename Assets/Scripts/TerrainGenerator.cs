@@ -8,7 +8,6 @@ public class TerrainGenerator {
   SplatPrototype[] splats;
 
   public TerrainGenerator(int seed, int mapSize, float tileSize) {
-    scale = 5;
     this.seed = seed;
     this.mapSize = mapSize;
     this.tileSize = tileSize;
@@ -28,9 +27,8 @@ public class TerrainGenerator {
   }
 
   private float Height(float x, float y) {
-    var perlinX = seed + 1000 + x * mapSize / scale;
-    var perlinY = seed + 1000 + y * mapSize / scale;
-
+    var perlinX = seed + 1000 + x / 15f;
+    var perlinY = seed + 1000 + y / 15f;
     return Mathf.PerlinNoise(perlinX, perlinY);
   }
 
@@ -47,10 +45,22 @@ public class TerrainGenerator {
 
     for (var y = 0; y < terrain.alphamapHeight; y++) {
       for (var x = 0; x < terrain.alphamapWidth; x++) {
-        var height = Height((float) x / terrain.alphamapWidth, (float) y / terrain.alphamapHeight);
+        float realX = ((float) x / terrain.alphamapWidth) * mapSize * tileSize;
+        float realY = ((float) y / terrain.alphamapHeight) * mapSize * tileSize;
 
-        splatmap[x, y, 0] = height;
-        splatmap[x, y, 1] = 1 - height;
+        var height = Height(realX, realY);
+
+        if (height <= .3f) {
+          splatmap[y, x, 0] = 1;
+          splatmap[y, x, 1] = 0;
+        } else if (height <= .5f) {
+          var normalized = (height - .3f) * 5;
+          splatmap[y, x, 0] = 1 - normalized;
+          splatmap[y, x, 1] = normalized;
+        } else {
+          splatmap[y, x, 0] = 0;
+          splatmap[y, x, 1] = 1;
+        }
       }
     }
 
