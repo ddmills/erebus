@@ -7,6 +7,7 @@ public class Quadtest : MonoBehaviour
     private GameObject holder;
     public TerrainTree quad;
     float seed = 0;
+    private Vector3 mousepos;
 
     public float Height(float x, float y)
     {
@@ -44,6 +45,7 @@ public class Quadtest : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit))
         {
+            mousepos = hit.point;
             Vector2 v = new Vector2(hit.point.x, hit.point.z);
             if (Input.GetMouseButton(0)) {
                 quad.Insert(v);
@@ -56,6 +58,15 @@ public class Quadtest : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        if (mousepos != null)
+        {
+            Gizmos.color = new Color(1, 0, 1);
+            Gizmos.DrawRay(mousepos,new Vector3(1,0,0));
+            Gizmos.DrawRay(mousepos, new Vector3(-1, 0, 0));
+            Gizmos.DrawRay(mousepos, new Vector3(0, 0, 1));
+            Gizmos.DrawRay(mousepos, new Vector3(0, 0, -1));
+            Gizmos.color = new Color(1, 1, 1);
+        }
         if (quad != null)
         {
             quad.DrawDebug();
