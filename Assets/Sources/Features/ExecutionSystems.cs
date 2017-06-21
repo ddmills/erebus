@@ -5,5 +5,6 @@ public sealed class ExecutionSystems : Feature {
     Add(new AddViewSystem(contexts));
     Add(new RemoveViewSystem(contexts));
     Add(new RenderPositionSystem(contexts));
+    Add(new RenderScaleSystem(contexts));
   }
 }

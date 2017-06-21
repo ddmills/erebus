@@ -1,29 +1,44 @@
 using Entitas;
 using UnityEngine;
 
-public sealed class InitMountainSystem : IInitializeSystem {
+public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<GameEntity> {
   private readonly GameContext context;
+  private QuadTree<GameEntity> terrain;
+  private readonly Transform container;
 
   public InitMountainSystem(Contexts contexts) {
     context = contexts.game;
+    container = new GameObject("Mountains").transform;
   }
 
   public void Initialize() {
     var mapSize = context.config.value.mapSize;
+
+    terrain = new QuadTree<GameEntity>(this, new Rect(0, 0, mapSize, mapSize));
+
     for (var y = 0; y < mapSize; y++) {
       for (var x = 0; x < mapSize; x++) {
         if (Height(x, y) > .5f) {
-          CreateMountain(x, y);
+          terrain.Insert(new Vector2(x, y));
         }
       }
     }
+
+    terrain.Visualize();
   }
 
-  private void CreateMountain(int x, int y) {
+  public void Remove(GameEntity cell) {
+    cell.isDestroyed = true;
+  }
+
+  public GameEntity Render(Rect bounds) {
     var mountain = context.CreateEntity();
+
+    mountain.AddPosition(bounds.x + bounds.width / 2f, 0, bounds.y + bounds.height / 2f);
+    mountain.AddScale(bounds.width, 1, bounds.height);
     mountain.AddAsset("Prefabs/Cube");
-    mountain.AddPosition(x, 0, y);
-    mountain.isSnappedToTile = true;
+
+    return mountain;
   }
 
   private float Height(float x, float y) {

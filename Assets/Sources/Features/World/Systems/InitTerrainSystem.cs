@@ -9,7 +9,6 @@ public sealed class InitTerrainSystem : IInitializeSystem {
   }
 
   public void Initialize() {
-    var seed = context.config.value.seed;
     var mapSize = context.config.value.mapSize;
     var tileSize = context.config.value.tileSize;
     var sand = Resources.Load<Texture2D>("Textures/Terrain/sand3");
