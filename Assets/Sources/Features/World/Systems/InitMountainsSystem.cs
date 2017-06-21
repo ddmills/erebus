@@ -33,12 +33,10 @@ public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<GameEnt
 
   public GameEntity Render(Rect bounds) {
     var mountain = context.CreateEntity();
+
     mountain.AddPosition(bounds.x + bounds.width / 2f, 0, bounds.y + bounds.height / 2f);
-    var asset = Resources.Load<GameObject>("Prefabs/Cube");
-    var gameObject = Object.Instantiate(asset);
-    gameObject.transform.localScale = new Vector3(bounds.width, 1, bounds.height);
-    gameObject.transform.parent = container;
-    mountain.AddView(gameObject);
+    mountain.AddScale(bounds.width, 1, bounds.height);
+    mountain.AddAsset("Prefabs/Cube");
 
     return mountain;
   }
