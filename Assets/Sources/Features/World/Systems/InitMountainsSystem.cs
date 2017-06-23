@@ -4,11 +4,9 @@ using UnityEngine;
 public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<GameEntity> {
   private readonly GameContext context;
   private QuadTree<GameEntity> terrain;
-  private readonly Transform container;
 
   public InitMountainSystem(Contexts contexts) {
     context = contexts.game;
-    container = new GameObject("Mountains").transform;
   }
 
   public void Initialize() {

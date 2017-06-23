@@ -1,11 +1,14 @@
 using Entitas;
+using Entitas.Unity;
 using UnityEngine;
 using System.Collections.Generic;
 
 public sealed class AddViewSystem : ReactiveSystem<GameEntity> {
-  readonly Transform viewContainer;
+  private readonly GameContext context;
+  private readonly Transform viewContainer;
 
   public AddViewSystem(Contexts contexts) : base(contexts.game) {
+    context = contexts.game;
     viewContainer = new GameObject("Views").transform;
   }
 
@@ -23,7 +26,8 @@ public sealed class AddViewSystem : ReactiveSystem<GameEntity> {
 
       try {
         var gameObject = Object.Instantiate(asset);
-        gameObject.transform.parent = viewContainer;
+        gameObject.transform.SetParent(viewContainer.transform, false);
+        gameObject.Link(entity, context);
         entity.AddView(gameObject);
       } catch (System.Exception) {
         Debug.Log("Cannot instantiate " + asset);

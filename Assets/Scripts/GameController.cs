@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour {
   Systems createSystems(Contexts contexts) {
     return new Feature("All Systems")
       .Add(new InitSystems(contexts))
-      .Add(new ExecutionSystems(contexts));
+      .Add(new ExecutionSystems(contexts))
+      .Add(new ReactiveSystems(contexts));
   }
 }
