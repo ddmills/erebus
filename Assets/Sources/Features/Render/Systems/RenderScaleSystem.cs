@@ -15,8 +15,8 @@ public sealed class RenderScaleSystem : ReactiveSystem<GameEntity> {
   }
 
   protected override void Execute(List<GameEntity> entities) {
-    foreach (var entity in entities) {
+    entities.ForEach(entity => {
       entity.view.gameObject.transform.localScale = new Vector3(entity.scale.x, entity.scale.y, entity.scale.z);
-    }
+    });
   }
 }

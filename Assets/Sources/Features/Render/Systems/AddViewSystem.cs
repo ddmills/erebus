@@ -21,7 +21,7 @@ public sealed class AddViewSystem : ReactiveSystem<GameEntity> {
   }
 
   protected override void Execute(List<GameEntity> entities) {
-    foreach (GameEntity entity in entities) {
+    entities.ForEach(entity => {
       var asset = Resources.Load<GameObject>(entity.asset.name);
 
       try {
@@ -32,6 +32,6 @@ public sealed class AddViewSystem : ReactiveSystem<GameEntity> {
       } catch (System.Exception) {
         Debug.Log("Cannot instantiate " + asset);
       }
-    }
+    });
   }
 }

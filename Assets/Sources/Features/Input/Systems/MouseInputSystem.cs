@@ -10,6 +10,10 @@ public sealed class MouseInputSystem : IExecuteSystem {
   }
 
   public void Execute() {
+    var lmb = Input.GetMouseButton(0);
+    var rmb = Input.GetMouseButton(1);
+    var mmb = Input.GetMouseButton(2);
 
+    context.ReplaceMouse(lmb, mmb, rmb);
   }
 }

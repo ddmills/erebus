@@ -15,7 +15,7 @@ public sealed class RenderPositionSystem : ReactiveSystem<GameEntity> {
   }
 
   protected override void Execute(List<GameEntity> entities) {
-    foreach (var entity in entities) {
+    entities.ForEach(entity => {
       var position = entity.position;
       if (entity.isSnappedToTile) {
         var tileSize = (float) Contexts.sharedInstance.game.config.value.tileSize;
@@ -30,6 +30,6 @@ public sealed class RenderPositionSystem : ReactiveSystem<GameEntity> {
       } else {
         entity.view.gameObject.transform.position = new Vector3(position.x, position.y, position.z);
       }
-    }
+    });
   }
 }

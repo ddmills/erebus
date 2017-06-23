@@ -28,10 +28,10 @@ public sealed class RemoveViewSystem : ReactiveSystem<GameEntity> {
   }
 
   protected override void Execute(List<GameEntity> entities) {
-    foreach (var entity in entities) {
+    entities.ForEach(entity => {
       entity.view.gameObject.Unlink();
       Object.Destroy(entity.view.gameObject);
       entity.RemoveView();
-    }
+    });
   }
 }
