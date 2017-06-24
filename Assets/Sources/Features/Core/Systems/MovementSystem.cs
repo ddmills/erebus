@@ -26,7 +26,7 @@ public sealed class MovementSystem : IExecuteSystem, ICleanupSystem {
         entity.moveTo.z - entity.position.z
       );
 
-      Vector3 offset = direction.normalized * entity.speed.value;
+      Vector3 offset = direction.normalized * entity.speed.value * context.time.delta;
 
       entity.ReplacePosition(
         entity.position.x + offset.x,

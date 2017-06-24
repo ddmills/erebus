@@ -4,10 +4,8 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public sealed class RemoveViewSystem : ReactiveSystem<GameEntity> {
-  private readonly GameContext context;
 
   public RemoveViewSystem(Contexts contexts) : base(contexts.game) {
-    context = contexts.game;
   }
 
   protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) {

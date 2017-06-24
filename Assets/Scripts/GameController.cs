@@ -9,6 +9,9 @@ public class GameController : MonoBehaviour {
     Contexts contexts = Contexts.sharedInstance;
 
     contexts.game.SetConfig(config);
+    contexts.game.SetTime(0, 1);
+
+
     Random.InitState(config.seed);
 
     systems = createSystems(contexts);
