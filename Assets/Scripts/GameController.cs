@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour {
 
   void Update() {
     systems.Execute();
+    systems.Cleanup();
   }
 
   Systems createSystems(Contexts contexts) {
