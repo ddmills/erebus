@@ -1,15 +1,24 @@
 fileFormatVersion: 2
-guid: 9e7efa867d55400408a6ebb5e6a187a8
-timeCreated: 1497132519
+guid: b8a52cd0d7fa7364fad6584829ccaf70
+timeCreated: 1498325322
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: FixedCube
+    100000: Colonist
+    100002: //RootNode
+    100004: Cube
+    400000: Colonist
+    400002: //RootNode
+    400004: Cube
+    2300000: Colonist
+    2300002: Cube
+    2300004: //RootNode
+    3300000: Colonist
+    3300002: Cube
+    3300004: //RootNode
+    4300000: Cube
+    4300002: Colonist
   materials:
     importMaterials: 1
     materialName: 0
