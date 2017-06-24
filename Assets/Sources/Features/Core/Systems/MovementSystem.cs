@@ -4,21 +4,21 @@ using UnityEngine;
 
 public sealed class MovementSystem : IExecuteSystem, ICleanupSystem {
   private readonly GameContext context;
-  private readonly IMatcher<GameEntity> moving;
+  private readonly IGroup<GameEntity> moving;
   private readonly IGroup<GameEntity> completed;
 
   public MovementSystem(Contexts contexts) {
     context = contexts.game;
-    moving = Matcher<GameEntity>.AllOf(
+    completed = context.GetGroup(GameMatcher.MoveToCompleted);
+    moving = context.GetGroup(Matcher<GameEntity>.AllOf(
       GameMatcher.MoveTo,
       GameMatcher.Speed,
       GameMatcher.Position
-    );
-    completed = context.GetGroup(GameMatcher.MoveToCompleted);
+    ));
   }
 
   public void Execute() {
-    var entities = context.GetEntities(moving);
+    var entities = moving.GetEntities();
     foreach (var entity in entities) {
       Vector3 direction = new Vector3(
         entity.moveTo.x - entity.position.x,
