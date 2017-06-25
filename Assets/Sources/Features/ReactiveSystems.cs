@@ -7,5 +7,7 @@ public sealed class ReactiveSystems : Feature {
     Add(new RenderPositionSystem(contexts));
     Add(new RenderScaleSystem(contexts));
     Add(new DestroySystem(contexts));
+    Add(new AddAbilityToMoveSystem(contexts));
+    Add(new RemoveAbilityToMoveSystem(contexts));
   }
 }

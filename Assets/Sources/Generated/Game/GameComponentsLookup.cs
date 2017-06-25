@@ -8,45 +8,57 @@
 //------------------------------------------------------------------------------
 public static class GameComponentsLookup {
 
-    public const int Asset = 0;
-    public const int Config = 1;
-    public const int Destroyed = 2;
-    public const int MoveToCompleted = 3;
-    public const int MoveTo = 4;
-    public const int Position = 5;
-    public const int Scale = 6;
-    public const int SnappedToTile = 7;
-    public const int Speed = 8;
-    public const int Time = 9;
-    public const int View = 10;
+    public const int AbleToMove = 0;
+    public const int Asset = 1;
+    public const int Config = 2;
+    public const int Destroyed = 3;
+    public const int MoveToCompleted = 4;
+    public const int MoveTo = 5;
+    public const int OwnedByPlayer = 6;
+    public const int Position = 7;
+    public const int Scale = 8;
+    public const int SnappedToTile = 9;
+    public const int Speed = 10;
+    public const int Task = 11;
+    public const int Time = 12;
+    public const int View = 13;
+    public const int Worker = 14;
 
-    public const int TotalComponents = 11;
+    public const int TotalComponents = 15;
 
     public static readonly string[] componentNames = {
+        "AbleToMove",
         "Asset",
         "Config",
         "Destroyed",
         "MoveToCompleted",
         "MoveTo",
+        "OwnedByPlayer",
         "Position",
         "Scale",
         "SnappedToTile",
         "Speed",
+        "Task",
         "Time",
-        "View"
+        "View",
+        "Worker"
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(AbleToMoveComponent),
         typeof(AssetComponent),
         typeof(ConfigComponent),
         typeof(DestroyedComponent),
         typeof(MoveToCompletedComponent),
         typeof(MoveToComponent),
+        typeof(OwnedByPlayerComponent),
         typeof(PositionComponent),
         typeof(ScaleComponent),
         typeof(SnappedToTileComponent),
         typeof(SpeedComponent),
+        typeof(TaskComponent),
         typeof(TimeComponent),
-        typeof(ViewComponent)
+        typeof(ViewComponent),
+        typeof(WorkerComponent)
     };
 }

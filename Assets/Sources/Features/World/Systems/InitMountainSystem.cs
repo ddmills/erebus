@@ -31,9 +31,10 @@ public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<GameEnt
 
   public GameEntity Render(Rect bounds) {
     var mountain = context.CreateEntity();
+    var height = Random.Range(1f, 3f);
 
     mountain.AddPosition(bounds.x + bounds.width / 2f, 0, bounds.y + bounds.height / 2f);
-    mountain.AddScale(bounds.width, 1, bounds.height);
+    mountain.AddScale(bounds.width, height, bounds.height);
     mountain.AddAsset("Prefabs/Cube");
 
     return mountain;

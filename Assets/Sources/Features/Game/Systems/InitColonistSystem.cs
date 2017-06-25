@@ -18,6 +18,9 @@ public sealed class InitColonistSystem : IInitializeSystem {
     var colonist = context.CreateEntity();
     colonist.AddAsset("Prefabs/Colonist");
     colonist.AddPosition(x, 0, z);
+    colonist.AddSpeed(.75f);
+    colonist.isOwnedByPlayer = true;
+    colonist.isWorker = true;
     return colonist;
   }
 }
