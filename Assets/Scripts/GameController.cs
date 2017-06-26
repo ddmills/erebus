@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
     contexts.game.SetConfig(config);
     contexts.game.SetTime(0, 1);
     contexts.game.OnEntityCreated += AddGameId;
+    contexts.task.OnEntityCreated += AddTaskId;
 
 
     Random.InitState(config.seed);
@@ -39,6 +40,13 @@ public class GameController : MonoBehaviour {
     GameEntity gameEntity = entity as GameEntity;
     if (gameEntity != null) {
       gameEntity.AddId(currentId++);
+    }
+  }
+
+  private void AddTaskId(IContext context, IEntity entity) {
+    TaskEntity taskEntity = entity as TaskEntity;
+    if (taskEntity != null) {
+      taskEntity.AddId(currentId++);
     }
   }
 }

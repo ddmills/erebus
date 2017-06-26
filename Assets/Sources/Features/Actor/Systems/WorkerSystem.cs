@@ -1,6 +1,5 @@
 using System;
 using Entitas;
-using UnityEngine;
 
 public sealed class WorkerSystem : IExecuteSystem {
   private readonly GameContext context;

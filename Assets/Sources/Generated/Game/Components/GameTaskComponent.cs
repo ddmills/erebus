@@ -11,17 +11,17 @@ public partial class GameEntity {
     public TaskComponent task { get { return (TaskComponent)GetComponent(GameComponentsLookup.Task); } }
     public bool hasTask { get { return HasComponent(GameComponentsLookup.Task); } }
 
-    public void AddTask(Task newValue) {
+    public void AddTask(int newId) {
         var index = GameComponentsLookup.Task;
         var component = CreateComponent<TaskComponent>(index);
-        component.value = newValue;
+        component.id = newId;
         AddComponent(index, component);
     }
 
-    public void ReplaceTask(Task newValue) {
+    public void ReplaceTask(int newId) {
         var index = GameComponentsLookup.Task;
         var component = CreateComponent<TaskComponent>(index);
-        component.value = newValue;
+        component.id = newId;
         ReplaceComponent(index, component);
     }
 
