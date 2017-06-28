@@ -16,17 +16,12 @@ public sealed class InitColonistSystem : IInitializeSystem {
   }
 
   private Entity createColonist(float x, float z) {
-    TaskEntity task = WanderTaskBlueprint.Create();
     var colonist = context.CreateEntity();
     colonist.AddAsset("Prefabs/Colonist");
     colonist.AddPosition(x, 0, z);
     colonist.AddSpeed(Random.Range(.3f, 4f));
     colonist.isOwnedByPlayer = true;
     colonist.isWorker = true;
-    colonist.AddTask(task.id.value);
-    task.workers.ids.Add(colonist.id.value);
-    task.AddWorkerAdded(colonist.id.value);
-    task.ReplaceWorkers(task.workers.ids);
     return colonist;
   }
 }

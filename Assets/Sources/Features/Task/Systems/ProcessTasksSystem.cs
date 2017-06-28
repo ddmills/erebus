@@ -22,7 +22,7 @@ public sealed class ProcessTasksSystem : IExecuteSystem {
   public void Execute() {
     foreach (var task in tasks.GetEntities()) {
       if (task.isCompleted) {
-        task.taskProcessor.value.OnComplete();
+        task.taskProcessor.value.OnComplete(task);
       } else {
         foreach (var id in task.workers.ids) {
           var worker = gameContext.GetEntityWithId(id);
