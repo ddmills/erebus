@@ -15,7 +15,7 @@ public sealed class AssignTasksSystem : IExecuteSystem {
     taskGroup = taskContext.GetGroup(
       TaskMatcher.AllOf(
         TaskMatcher.Type,
-        TaskMatcher.TaskProcessor
+        TaskMatcher.Processor
       )
     );
     workerGroup = gameContext.GetGroup(GameMatcher.Worker);
@@ -52,13 +52,13 @@ public sealed class AssignTasksSystem : IExecuteSystem {
   private void RemoveWorkerFromTask(GameEntity worker, TaskEntity task) {
       task.workers.ids.Remove(worker.id.value);
       task.ReplaceWorkers(task.workers.ids);
-      task.taskProcessor.value.OnRemoveWorker(worker, task);
+      task.processor.value.OnRemoveWorker(worker, task);
   }
 
   private void AssignWorkerToTask(GameEntity worker, TaskEntity task) {
     worker.ReplaceTask(task.id.value);
     task.workers.ids.Add(worker.id.value);
-    task.taskProcessor.value.OnAddWorker(worker, task);
+    task.processor.value.OnAddWorker(worker, task);
     task.ReplaceWorkers(task.workers.ids);
   }
 
@@ -67,8 +67,8 @@ public sealed class AssignTasksSystem : IExecuteSystem {
     var highestPriority = 0f;
 
     foreach (var task in tasks) {
-      if (task.taskProcessor.value.CanBeWorkedBy(worker, task)) {
-        var weight = task.taskProcessor.value.CalculateWeight(worker, task);
+      if (task.processor.value.CanBeWorkedBy(worker, task)) {
+        var weight = task.processor.value.CalculateWeight(worker, task);
         if (weight > highestPriority) {
           highestPriorityTask = task;
           highestPriority = weight;

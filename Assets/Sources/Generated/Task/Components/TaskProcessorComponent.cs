@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TaskEntity {
 
-    public TaskProcessorComponent taskProcessor { get { return (TaskProcessorComponent)GetComponent(TaskComponentsLookup.TaskProcessor); } }
-    public bool hasTaskProcessor { get { return HasComponent(TaskComponentsLookup.TaskProcessor); } }
+    public ProcessorComponent processor { get { return (ProcessorComponent)GetComponent(TaskComponentsLookup.Processor); } }
+    public bool hasProcessor { get { return HasComponent(TaskComponentsLookup.Processor); } }
 
-    public void AddTaskProcessor(TaskProcessor newValue) {
-        var index = TaskComponentsLookup.TaskProcessor;
-        var component = CreateComponent<TaskProcessorComponent>(index);
+    public void AddProcessor(TaskProcessor newValue) {
+        var index = TaskComponentsLookup.Processor;
+        var component = CreateComponent<ProcessorComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
-    public void ReplaceTaskProcessor(TaskProcessor newValue) {
-        var index = TaskComponentsLookup.TaskProcessor;
-        var component = CreateComponent<TaskProcessorComponent>(index);
+    public void ReplaceProcessor(TaskProcessor newValue) {
+        var index = TaskComponentsLookup.Processor;
+        var component = CreateComponent<ProcessorComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
-    public void RemoveTaskProcessor() {
-        RemoveComponent(TaskComponentsLookup.TaskProcessor);
+    public void RemoveProcessor() {
+        RemoveComponent(TaskComponentsLookup.Processor);
     }
 }
 
@@ -40,17 +40,17 @@ public partial class TaskEntity {
 //------------------------------------------------------------------------------
 public sealed partial class TaskMatcher {
 
-    static Entitas.IMatcher<TaskEntity> _matcherTaskProcessor;
+    static Entitas.IMatcher<TaskEntity> _matcherProcessor;
 
-    public static Entitas.IMatcher<TaskEntity> TaskProcessor {
+    public static Entitas.IMatcher<TaskEntity> Processor {
         get {
-            if (_matcherTaskProcessor == null) {
-                var matcher = (Entitas.Matcher<TaskEntity>)Entitas.Matcher<TaskEntity>.AllOf(TaskComponentsLookup.TaskProcessor);
+            if (_matcherProcessor == null) {
+                var matcher = (Entitas.Matcher<TaskEntity>)Entitas.Matcher<TaskEntity>.AllOf(TaskComponentsLookup.Processor);
                 matcher.componentNames = TaskComponentsLookup.componentNames;
-                _matcherTaskProcessor = matcher;
+                _matcherProcessor = matcher;
             }
 
-            return _matcherTaskProcessor;
+            return _matcherProcessor;
         }
     }
 }

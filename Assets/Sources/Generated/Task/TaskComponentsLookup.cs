@@ -10,9 +10,9 @@ public static class TaskComponentsLookup {
 
     public const int Completed = 0;
     public const int Id = 1;
-    public const int Progress = 2;
-    public const int Range = 3;
-    public const int TaskProcessor = 4;
+    public const int Processor = 2;
+    public const int Progress = 3;
+    public const int Range = 4;
     public const int Type = 5;
     public const int Verb = 6;
     public const int WorkerAdded = 7;
@@ -23,9 +23,9 @@ public static class TaskComponentsLookup {
     public static readonly string[] componentNames = {
         "Completed",
         "Id",
+        "Processor",
         "Progress",
         "Range",
-        "TaskProcessor",
         "Type",
         "Verb",
         "WorkerAdded",
@@ -35,9 +35,9 @@ public static class TaskComponentsLookup {
     public static readonly System.Type[] componentTypes = {
         typeof(CompletedComponent),
         typeof(IdComponent),
+        typeof(ProcessorComponent),
         typeof(ProgressComponent),
         typeof(Range),
-        typeof(TaskProcessorComponent),
         typeof(TypeComponent),
         typeof(Verb),
         typeof(WorkerAddedComponent),

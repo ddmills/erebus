@@ -18,10 +18,10 @@ public sealed class CompleteTasksSystem : ReactiveSystem<TaskEntity> {
 
   protected override void Execute(List<TaskEntity> entities) {
     entities.ForEach(task => {
-      task.taskProcessor.value.OnComplete(task);
+      task.processor.value.OnComplete(task);
       task.workers.ids.ForEach(id => {
         var worker = gameContext.GetEntityWithId(id);
-        task.taskProcessor.value.OnRemoveWorker(worker, task);
+        task.processor.value.OnRemoveWorker(worker, task);
         worker.RemoveTask();
       });
       task.ReplaceWorkers(new List<int>());

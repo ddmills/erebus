@@ -14,20 +14,16 @@ public sealed class ProcessTasksSystem : IExecuteSystem {
     tasks = taskContext.GetGroup(
       TaskMatcher.AllOf(
         TaskMatcher.Type,
-        TaskMatcher.TaskProcessor
+        TaskMatcher.Processor
       )
     );
   }
 
   public void Execute() {
     foreach (var task in tasks.GetEntities()) {
-      if (task.isCompleted) {
-        task.taskProcessor.value.OnComplete(task);
-      } else {
-        foreach (var id in task.workers.ids) {
-          var worker = gameContext.GetEntityWithId(id);
-          task.taskProcessor.value.Process(worker, task);
-        }
+      foreach (var id in task.workers.ids) {
+        var worker = gameContext.GetEntityWithId(id);
+        task.processor.value.Process(worker, task);
       }
     }
   }

@@ -6,7 +6,7 @@ public sealed class WanderTaskBlueprint {
   public static TaskEntity Create() {
     TaskEntity task = Contexts.sharedInstance.task.CreateEntity();
     task.AddType(TaskType.Wander);
-    task.AddTaskProcessor(processor);
+    task.AddProcessor(processor);
     task.AddVerb("wander", "wandered", "wandering");
     task.AddRange(3f, 6f);
     task.AddWorkers(new List<int>());
