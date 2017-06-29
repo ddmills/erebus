@@ -24,15 +24,13 @@ public partial class Contexts : Entitas.IContexts {
     public GameContext game { get; set; }
     public InputContext input { get; set; }
     public TaskContext task { get; set; }
-    public WorldContext world { get; set; }
 
-    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { game, input, task, world }; } }
+    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { game, input, task }; } }
 
     public Contexts() {
         game = new GameContext();
         input = new InputContext();
         task = new TaskContext();
-        world = new WorldContext();
 
         var postConstructors = System.Linq.Enumerable.Where(
             GetType().GetMethods(),
@@ -66,10 +64,6 @@ public partial class Contexts {
 
     [Entitas.CodeGeneration.Attributes.PostConstructor]
     public void InitializeEntityIndices() {
-        world.AddEntityIndex(new Entitas.PrimaryEntityIndex<WorldEntity, int>(
-            Id,
-            world.GetGroup(WorldMatcher.Id),
-            (e, c) => ((IdComponent)c).value));
         task.AddEntityIndex(new Entitas.PrimaryEntityIndex<TaskEntity, int>(
             Id,
             task.GetGroup(TaskMatcher.Id),
@@ -86,10 +80,6 @@ public partial class Contexts {
 }
 
 public static class ContextsExtensions {
-
-    public static WorldEntity GetEntityWithId(this WorldContext context, int value) {
-        return ((Entitas.PrimaryEntityIndex<WorldEntity, int>)context.GetEntityIndex(Contexts.Id)).GetEntity(value);
-    }
 
     public static TaskEntity GetEntityWithId(this TaskContext context, int value) {
         return ((Entitas.PrimaryEntityIndex<TaskEntity, int>)context.GetEntityIndex(Contexts.Id)).GetEntity(value);
@@ -121,7 +111,6 @@ public partial class Contexts {
             CreateContextObserver(game);
             CreateContextObserver(input);
             CreateContextObserver(task);
-            CreateContextObserver(world);
         } catch(System.Exception) {
         }
     }

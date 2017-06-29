@@ -1,7 +1,7 @@
 using Entitas;
 using Entitas.CodeGeneration.Attributes;
 
-[World, Unique]
+[Game, Unique]
 public sealed class TileMapComponent : IComponent {
   public TileMap<Tile> tiles;
 }

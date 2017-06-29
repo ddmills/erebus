@@ -1,6 +1,6 @@
 using Entitas;
 
-[Game, World]
+[Game]
 public sealed class ScaleComponent : IComponent {
   public float x;
   public float y;
