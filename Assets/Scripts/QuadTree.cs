@@ -102,7 +102,7 @@ public class QuadTree<T> where T : class {
   public void Visualize() {
     if (Filled()) {
       if (cell == null) {
-        cell = renderer.Render(bounds);
+        cell = renderer.RenderCell(bounds);
       }
     } else {
       if (cell != null) {

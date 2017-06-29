@@ -1,10 +1,7 @@
 using Entitas;
 
 public sealed class InitColonistSystem : IInitializeSystem {
-  private readonly GameContext context;
-
   public InitColonistSystem(Contexts contexts) {
-    context = contexts.game;
   }
 
   public void Initialize() {

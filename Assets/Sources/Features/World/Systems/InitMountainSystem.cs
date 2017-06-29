@@ -18,6 +18,8 @@ public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<GameEnt
       for (var x = 0; x < mapSize; x++) {
         if (Height(x, y) > .5f) {
           terrain.Insert(new Vector2(x, y));
+          var tile = context.tileMap.tiles.Get(x, y);
+          tile.hasMountain = true;
         }
       }
     }
@@ -25,11 +27,11 @@ public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<GameEnt
     terrain.Visualize();
   }
 
-  public void Remove(GameEntity cell) {
+  public void RemoveCell(GameEntity cell) {
     cell.isDestroyed = true;
   }
 
-  public GameEntity Render(Rect bounds) {
+  public GameEntity RenderCell(Rect bounds) {
     var mountain = context.CreateEntity();
     var height = Random.Range(1f, 3f);
 

@@ -5,6 +5,9 @@ public class TileMap<T> where T : new() {
   public int Height { get; }
   private T[,] tiles;
 
+  public TileMap(int size) : this(size, size) {
+  }
+
   public TileMap(int width, int height) {
     Width = width;
     Height = height;
