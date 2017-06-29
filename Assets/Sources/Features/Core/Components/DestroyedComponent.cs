@@ -1,5 +1,5 @@
 using Entitas;
 
-[Game]
+[Game, World]
 public sealed class DestroyedComponent : IComponent {
 }

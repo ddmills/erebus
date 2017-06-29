@@ -6,13 +6,13 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public partial class GameContext {
+public partial class WorldContext {
 
-    public GameEntity tileMapEntity { get { return GetGroup(GameMatcher.TileMap).GetSingleEntity(); } }
+    public WorldEntity tileMapEntity { get { return GetGroup(WorldMatcher.TileMap).GetSingleEntity(); } }
     public TileMapComponent tileMap { get { return tileMapEntity.tileMap; } }
     public bool hasTileMap { get { return tileMapEntity != null; } }
 
-    public GameEntity SetTileMap(TileMap<Tile> newTiles) {
+    public WorldEntity SetTileMap(TileMap<Tile> newTiles) {
         if (hasTileMap) {
             throw new Entitas.EntitasException("Could not set TileMap!\n" + this + " already has an entity with TileMapComponent!",
                 "You should check if the context already has a tileMapEntity before setting it or use context.ReplaceTileMap().");
@@ -44,27 +44,27 @@ public partial class GameContext {
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public partial class GameEntity {
+public partial class WorldEntity {
 
-    public TileMapComponent tileMap { get { return (TileMapComponent)GetComponent(GameComponentsLookup.TileMap); } }
-    public bool hasTileMap { get { return HasComponent(GameComponentsLookup.TileMap); } }
+    public TileMapComponent tileMap { get { return (TileMapComponent)GetComponent(WorldComponentsLookup.TileMap); } }
+    public bool hasTileMap { get { return HasComponent(WorldComponentsLookup.TileMap); } }
 
     public void AddTileMap(TileMap<Tile> newTiles) {
-        var index = GameComponentsLookup.TileMap;
+        var index = WorldComponentsLookup.TileMap;
         var component = CreateComponent<TileMapComponent>(index);
         component.tiles = newTiles;
         AddComponent(index, component);
     }
 
     public void ReplaceTileMap(TileMap<Tile> newTiles) {
-        var index = GameComponentsLookup.TileMap;
+        var index = WorldComponentsLookup.TileMap;
         var component = CreateComponent<TileMapComponent>(index);
         component.tiles = newTiles;
         ReplaceComponent(index, component);
     }
 
     public void RemoveTileMap() {
-        RemoveComponent(GameComponentsLookup.TileMap);
+        RemoveComponent(WorldComponentsLookup.TileMap);
     }
 }
 
@@ -76,15 +76,15 @@ public partial class GameEntity {
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed partial class GameMatcher {
+public sealed partial class WorldMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherTileMap;
+    static Entitas.IMatcher<WorldEntity> _matcherTileMap;
 
-    public static Entitas.IMatcher<GameEntity> TileMap {
+    public static Entitas.IMatcher<WorldEntity> TileMap {
         get {
             if (_matcherTileMap == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.TileMap);
-                matcher.componentNames = GameComponentsLookup.componentNames;
+                var matcher = (Entitas.Matcher<WorldEntity>)Entitas.Matcher<WorldEntity>.AllOf(WorldComponentsLookup.TileMap);
+                matcher.componentNames = WorldComponentsLookup.componentNames;
                 _matcherTileMap = matcher;
             }
 

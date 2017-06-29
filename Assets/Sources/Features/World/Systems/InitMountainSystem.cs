@@ -1,18 +1,20 @@
 using Entitas;
 using UnityEngine;
 
-public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<GameEntity> {
-  private readonly GameContext context;
-  private QuadTree<GameEntity> terrain;
+public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<WorldEntity> {
+  private readonly WorldContext context;
+  private readonly Config config;
+  private QuadTree<WorldEntity> terrain;
 
   public InitMountainSystem(Contexts contexts) {
-    context = contexts.game;
+    context = contexts.world;
+    config = contexts.game.config.value;
   }
 
   public void Initialize() {
-    var mapSize = context.config.value.mapSize;
+    var mapSize = config.mapSize;
 
-    terrain = new QuadTree<GameEntity>(this, new Rect(0, 0, mapSize, mapSize));
+    terrain = new QuadTree<WorldEntity>(this, new Rect(0, 0, mapSize, mapSize));
 
     for (var y = 0; y < mapSize; y++) {
       for (var x = 0; x < mapSize; x++) {
@@ -27,11 +29,11 @@ public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<GameEnt
     terrain.Visualize();
   }
 
-  public void RemoveCell(GameEntity cell) {
+  public void RemoveCell(WorldEntity cell) {
     cell.isDestroyed = true;
   }
 
-  public GameEntity RenderCell(Rect bounds) {
+  public WorldEntity RenderCell(Rect bounds) {
     var mountain = context.CreateEntity();
     var height = Random.Range(1f, 3f);
 
@@ -43,8 +45,8 @@ public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<GameEnt
   }
 
   private float Height(float x, float y) {
-    var perlinX = context.config.value.seed + 1000 + x / 15f;
-    var perlinY = context.config.value.seed + 1000 + y / 15f;
+    var perlinX = config.seed + 1000 + x / 15f;
+    var perlinY = config.seed + 1000 + y / 15f;
     return Mathf.PerlinNoise(perlinX, perlinY);
   }
 }
