@@ -11,12 +11,7 @@ public sealed class ProcessTasksSystem : IExecuteSystem {
   public ProcessTasksSystem(Contexts contexts) {
     taskContext = contexts.task;
     gameContext = contexts.game;
-    tasks = taskContext.GetGroup(
-      TaskMatcher.AllOf(
-        TaskMatcher.Type,
-        TaskMatcher.Processor
-      )
-    );
+    tasks = taskContext.GetGroup(TaskMatcher.Processor);
   }
 
   public void Execute() {

@@ -15,10 +15,9 @@ public static class TaskComponentsLookup {
     public const int Range = 4;
     public const int Type = 5;
     public const int Verb = 6;
-    public const int WorkerAdded = 7;
-    public const int Workers = 8;
+    public const int Workers = 7;
 
-    public const int TotalComponents = 9;
+    public const int TotalComponents = 8;
 
     public static readonly string[] componentNames = {
         "Completed",
@@ -28,7 +27,6 @@ public static class TaskComponentsLookup {
         "Range",
         "Type",
         "Verb",
-        "WorkerAdded",
         "Workers"
     };
 
@@ -40,7 +38,6 @@ public static class TaskComponentsLookup {
         typeof(Range),
         typeof(TypeComponent),
         typeof(Verb),
-        typeof(WorkerAddedComponent),
         typeof(WorkersComponent)
     };
 }

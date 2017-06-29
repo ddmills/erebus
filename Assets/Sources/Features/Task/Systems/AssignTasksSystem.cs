@@ -12,12 +12,7 @@ public sealed class AssignTasksSystem : IExecuteSystem {
   public AssignTasksSystem(Contexts contexts) {
     taskContext = contexts.task;
     gameContext = contexts.game;
-    taskGroup = taskContext.GetGroup(
-      TaskMatcher.AllOf(
-        TaskMatcher.Type,
-        TaskMatcher.Processor
-      )
-    );
+    taskGroup = taskContext.GetGroup(TaskMatcher.Processor);
     workerGroup = gameContext.GetGroup(GameMatcher.Worker);
   }
 
