@@ -16,7 +16,7 @@ public sealed class WanderProcessor : TaskProcessor {
   }
 
   public override bool CanBeWorkedBy(GameEntity worker, TaskEntity task) {
-    return worker.isAbleToMove;
+    return worker.isAbleToMove && (task.workers.ids.Count == 0 || task.workers.ids.Contains(worker.id.value));
   }
 
   private void PickNewGoal(GameEntity worker, TaskEntity wander) {

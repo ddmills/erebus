@@ -33,7 +33,7 @@ public sealed class AssignTasksSystem : IExecuteSystem {
   private void AssignTaskToWorker(TaskEntity[] tasks, GameEntity worker) {
     var task = getHighestPriorityTask(tasks, worker);
 
-    if (worker.hasTask && worker.task.id == task.id.value) {
+    if (worker.hasTask && task != null && worker.task.id == task.id.value) {
       return;
     }
 
@@ -46,7 +46,7 @@ public sealed class AssignTasksSystem : IExecuteSystem {
       RemoveWorkerFromTask(worker, current);
     }
 
-    AssignWorkerToTask(worker, task);
+    AddWorkerToTask(worker, task);
   }
 
   private void RemoveWorkerFromTask(GameEntity worker, TaskEntity task) {
@@ -55,7 +55,7 @@ public sealed class AssignTasksSystem : IExecuteSystem {
       task.processor.value.OnRemoveWorker(worker, task);
   }
 
-  private void AssignWorkerToTask(GameEntity worker, TaskEntity task) {
+  private void AddWorkerToTask(GameEntity worker, TaskEntity task) {
     worker.ReplaceTask(task.id.value);
     task.workers.ids.Add(worker.id.value);
     task.processor.value.OnAddWorker(worker, task);
