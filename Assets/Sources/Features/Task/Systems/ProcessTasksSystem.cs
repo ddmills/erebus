@@ -1,7 +1,4 @@
-using System.Linq;
-using System.Collections.Generic;
 using Entitas;
-using UnityEngine;
 
 public sealed class ProcessTasksSystem : IExecuteSystem {
   private readonly GameContext gameContext;
