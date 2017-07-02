@@ -33,7 +33,18 @@ public sealed class PathfindingSystem : ReactiveSystem<GameEntity> {
       var start = tiles.Get(startX, startY);
 
       if (start != null && goal != null) {
-        var path = pathFinder.Find(start, goal, tile => (tile != null && tile.hasMountain) ? -1f : 1f);
+        var path = pathFinder.Find(start, goal, (from, to) => {
+          if (to == null || to.hasMountain) {
+            return -1f;
+          }
+
+          if (from.X != to.X && from.Y != to.Y) {
+            return 1.4142f;
+          }
+
+          return 1f;
+        });
+
         entity.ReplacePath(path, 0);
       }
     });

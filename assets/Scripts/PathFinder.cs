@@ -8,7 +8,7 @@ public sealed class PathFinder<T> where T : ICoordinate, new() {
     this.map = map;
   }
 
-  public List<T> Find(T start, T goal, Func<T, float> weight) {
+  public List<T> Find(T start, T goal, Func<T, T, float> weight) {
     var open = new List<T> { start };
     var closed = new List<T>();
     var parents = new Dictionary<T, T>();
@@ -38,54 +38,62 @@ public sealed class PathFinder<T> where T : ICoordinate, new() {
 
       var neighbors = map.Neighbors(current);
 
-      movementCosts[neighbors[1]] = weight(neighbors[1]);
-      if (movementCosts[neighbors[1]] < 0) {
+      var weight1 = weight(current, neighbors[1]);
+      if (weight1 < 0) {
+        closed.Add(neighbors[1]);
         neighbors[0] = default(T);
         neighbors[2] = default(T);
       }
 
-      movementCosts[neighbors[4]] = weight(neighbors[4]);
-      if (movementCosts[neighbors[4]] < 0) {
+      var weight4 = weight(current, neighbors[4]);
+      if (weight4 < 0) {
+        closed.Add(neighbors[4]);
         neighbors[2] = default(T);
         neighbors[7] = default(T);
       }
 
-      movementCosts[neighbors[6]] = weight(neighbors[6]);
-      if (movementCosts[neighbors[6]] < 0) {
+      var weight6 = weight(current, neighbors[6]);
+      if (weight6 < 0) {
+        closed.Add(neighbors[6]);
         neighbors[7] = default(T);
         neighbors[5] = default(T);
       }
 
-      movementCosts[neighbors[3]] = weight(neighbors[3]);
-      if (movementCosts[neighbors[3]] < 0) {
+      var weight3 = weight(current, neighbors[3]);
+      if (weight3 < 0) {
+        closed.Add(neighbors[3]);
         neighbors[5] = default(T);
         neighbors[0] = default(T);
       }
 
       foreach (var neighbor in neighbors) {
-        if (neighbor == null) {
+        if (neighbor == null || closed.Contains(neighbor)) {
           continue;
         }
 
-        if (!movementCosts.ContainsKey(neighbor)) {
-          movementCosts[neighbor] = weight(neighbor);
+        if (!open.Contains(neighbor)) {
+          open.Add(neighbor);
         }
 
-        var movementCost = movementCosts[neighbor];
+        var tentativeCost = weight(current, neighbor);
 
-        if (movementCost < 0) {
+        if (tentativeCost < 0) {
+          open.Remove(neighbor);
           closed.Add(neighbor);
           continue;
         }
 
-        if (closed.Contains(neighbor) || open.Contains(neighbor)) {
+        var movementCost = movementCosts[current] + tentativeCost;
+
+        if (!movementCosts.ContainsKey(neighbor) || movementCost < movementCosts[neighbor]) {
+          movementCosts[neighbor] = movementCost;
+        } else {
           continue;
         }
 
         parents.Remove(neighbor);
         parents.Add(neighbor, current);
         estimatedCosts.Enqueue(neighbor, movementCost + Heuristic(neighbor, goal));
-        open.Add(neighbor);
       }
     }
 
@@ -95,6 +103,6 @@ public sealed class PathFinder<T> where T : ICoordinate, new() {
   private float Heuristic(T node, T goal) {
     var dX = (node.X - goal.X);
     var dY = (node.Y - goal.Y);
-    return dX * dX + dY * dY;
+    return (float) Math.Sqrt(dX * dX + dY * dY);
   }
 }
