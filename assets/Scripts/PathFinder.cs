@@ -38,22 +38,26 @@ public sealed class PathFinder<T> where T : ICoordinate, new() {
 
       var neighbors = map.Neighbors(current);
 
-      if (weight(neighbors[1]) < 0) {
+      movementCosts[neighbors[1]] = weight(neighbors[1]);
+      if (movementCosts[neighbors[1]] < 0) {
         neighbors[0] = default(T);
         neighbors[2] = default(T);
       }
 
-      if (weight(neighbors[4]) < 0) {
+      movementCosts[neighbors[4]] = weight(neighbors[4]);
+      if (movementCosts[neighbors[4]] < 0) {
         neighbors[2] = default(T);
         neighbors[7] = default(T);
       }
 
-      if (weight(neighbors[6]) < 0) {
+      movementCosts[neighbors[6]] = weight(neighbors[6]);
+      if (movementCosts[neighbors[6]] < 0) {
         neighbors[7] = default(T);
         neighbors[5] = default(T);
       }
 
-      if (weight(neighbors[3]) < 0) {
+      movementCosts[neighbors[3]] = weight(neighbors[3]);
+      if (movementCosts[neighbors[3]] < 0) {
         neighbors[5] = default(T);
         neighbors[0] = default(T);
       }
@@ -63,7 +67,11 @@ public sealed class PathFinder<T> where T : ICoordinate, new() {
           continue;
         }
 
-        var movementCost = weight(neighbor);
+        if (!movementCosts.ContainsKey(neighbor)) {
+          movementCosts[neighbor] = weight(neighbor);
+        }
+
+        var movementCost = movementCosts[neighbor];
 
         if (movementCost < 0) {
           closed.Add(neighbor);
@@ -76,7 +84,6 @@ public sealed class PathFinder<T> where T : ICoordinate, new() {
 
         parents.Remove(neighbor);
         parents.Add(neighbor, current);
-        movementCosts[neighbor] = movementCost;
         estimatedCosts.Enqueue(neighbor, movementCost + Heuristic(neighbor, goal));
         open.Add(neighbor);
       }
