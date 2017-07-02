@@ -7,6 +7,7 @@ public sealed class ColonistBlueprint {
     colonist.AddAsset("Prefabs/Colonist");
     colonist.AddPosition(x, 0, z);
     colonist.AddSpeed(Random.Range(.3f, 4f));
+    colonist.AddGoal(0f, 0f);
     colonist.isOwnedByPlayer = true;
     colonist.isWorker = true;
     return colonist;

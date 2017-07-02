@@ -11,51 +11,48 @@ public sealed class PathFinder<T> where T : ICoordinate, new() {
   public List<T> Find(T start, T goal, Func<T, float> weight) {
     var open = new List<T> { start };
     var closed = new List<T>();
-    var path = new Dictionary<T, T>();
-    var gScores = new Dictionary<T, float> {{ start, 0f }};
-    var fScores = new PriorityQueue<T, float>();
+    var parents = new Dictionary<T, T>();
+    var movementCosts = new Dictionary<T, float> {{ start, 0f }};
+    var estimatedCosts = new PriorityQueue<T, float>();
 
-    fScores.Enqueue(start, Heuristic(start, goal));
+    estimatedCosts.Enqueue(start, Heuristic(start, goal));
 
     while (open.Count > 0) {
-      var current = fScores.Dequeue();
+      var current = estimatedCosts.Dequeue();
 
       if (current.Equals(goal)) {
-        var finalPath = new List<T>(path.Values);
-        finalPath.Reverse();
-        return finalPath;
+        var path = new List<T>(parents.Values);
+        path.Add(goal);
+        return path;
       }
 
       open.Remove(current);
       closed.Add(current);
 
       foreach (var neighbour in map.Neighbours(current)) {
-        // var w = weight(neighbour);
-
-        if (closed.Contains(neighbour)) {
+        if (neighbour == null) {
           continue;
         }
 
-        if (!open.Contains(neighbour)) {
-          open.Add(neighbour);
-        }
+        var movementCost = weight(neighbour);
 
-        var gScore = gScores[current] + Distance(current, neighbour);
-        if (gScore >= gScores[neighbour]) {
+        if (movementCost < 0 || closed.Contains(neighbour) || open.Contains(neighbour)) {
           continue;
         }
 
-        path.Add(current, neighbour);
-        gScores[neighbour] = gScore;
-        fScores.Enqueue(neighbour, gScore + Heuristic(neighbour, goal));
+        parents.Remove(current);
+        parents.Add(current, neighbour);
+        movementCosts[neighbour] = movementCost;
+        estimatedCosts.Enqueue(neighbour, movementCost + Heuristic(neighbour, goal));
+        open.Add(neighbour);
       }
     }
 
     return null;
   }
 
-  private float Heuristic(T start, T goal) {
-    return 1f;
+  private float Heuristic(T node, T goal) {
+    return Distance(node, goal);
   }
 
   private float Distance(T from, T to) {
