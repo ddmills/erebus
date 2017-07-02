@@ -6,7 +6,7 @@ public sealed class ColonistBlueprint {
     var colonist = Contexts.sharedInstance.game.CreateEntity();
     colonist.AddAsset("Prefabs/Colonist");
     colonist.AddPosition(x, 0, z);
-    colonist.AddSpeed(Random.Range(5f, 7f));
+    colonist.AddSpeed(Random.Range(1.5f, 2f));
     colonist.AddGoal(30f, 53f);
     colonist.isOwnedByPlayer = true;
     colonist.isWorker = true;

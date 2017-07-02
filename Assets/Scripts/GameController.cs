@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour {
     Contexts contexts = Contexts.sharedInstance;
 
     contexts.game.SetConfig(config);
-    contexts.game.SetTime(0, 1);
+    contexts.game.SetTime(0, 3);
     contexts.game.SetTileMap(new TileMap<Tile>(config.mapSize));
 
     contexts.game.OnEntityCreated += AddGameId;
