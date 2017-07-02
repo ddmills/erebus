@@ -34,7 +34,7 @@ public sealed class PathfindingSystem : ReactiveSystem<GameEntity> {
 
       if (start != null && goal != null) {
         var path = pathFinder.Find(start, goal, (from, to) => {
-          if (to == null || to.hasMountain) {
+          if (to.hasMountain) {
             return -1f;
           }
 

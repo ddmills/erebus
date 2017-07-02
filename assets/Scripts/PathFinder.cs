@@ -38,29 +38,25 @@ public sealed class PathFinder<T> where T : ICoordinate, new() {
 
       var neighbors = map.Neighbors(current);
 
-      var weight1 = weight(current, neighbors[1]);
-      if (weight1 < 0) {
+      if (neighbors[1] == null || weight(current, neighbors[1]) < 0) {
         closed.Add(neighbors[1]);
         neighbors[0] = default(T);
         neighbors[2] = default(T);
       }
 
-      var weight4 = weight(current, neighbors[4]);
-      if (weight4 < 0) {
+      if (neighbors[4] == null || weight(current, neighbors[4]) < 0) {
         closed.Add(neighbors[4]);
         neighbors[2] = default(T);
         neighbors[7] = default(T);
       }
 
-      var weight6 = weight(current, neighbors[6]);
-      if (weight6 < 0) {
+      if (neighbors[6] == null || weight(current, neighbors[6]) < 0) {
         closed.Add(neighbors[6]);
         neighbors[7] = default(T);
         neighbors[5] = default(T);
       }
 
-      var weight3 = weight(current, neighbors[3]);
-      if (weight3 < 0) {
+      if (neighbors[3] == null || weight(current, neighbors[3]) < 0) {
         closed.Add(neighbors[3]);
         neighbors[5] = default(T);
         neighbors[0] = default(T);
