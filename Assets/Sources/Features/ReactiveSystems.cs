@@ -8,6 +8,7 @@ public sealed class ReactiveSystems : Feature {
     Add(new RenderScaleSystem(contexts));
     Add(new PathfindingSystem(contexts));
     Add(new FollowPathSystem(contexts));
+    Add(new UpdatePathSystem(contexts));
     Add(new DestroySystem(contexts));
     Add(new AddAbilityToMoveSystem(contexts));
     Add(new RemoveAbilityToMoveSystem(contexts));

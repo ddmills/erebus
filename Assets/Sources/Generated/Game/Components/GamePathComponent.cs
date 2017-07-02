@@ -11,18 +11,18 @@ public partial class GameEntity {
     public PathComponent path { get { return (PathComponent)GetComponent(GameComponentsLookup.Path); } }
     public bool hasPath { get { return HasComponent(GameComponentsLookup.Path); } }
 
-    public void AddPath(System.Collections.Generic.List<Tile> newPath, int newCurrentNodeIndex) {
+    public void AddPath(System.Collections.Generic.List<Tile> newTiles, int newCurrentNodeIndex) {
         var index = GameComponentsLookup.Path;
         var component = CreateComponent<PathComponent>(index);
-        component.path = newPath;
+        component.tiles = newTiles;
         component.currentNodeIndex = newCurrentNodeIndex;
         AddComponent(index, component);
     }
 
-    public void ReplacePath(System.Collections.Generic.List<Tile> newPath, int newCurrentNodeIndex) {
+    public void ReplacePath(System.Collections.Generic.List<Tile> newTiles, int newCurrentNodeIndex) {
         var index = GameComponentsLookup.Path;
         var component = CreateComponent<PathComponent>(index);
-        component.path = newPath;
+        component.tiles = newTiles;
         component.currentNodeIndex = newCurrentNodeIndex;
         ReplaceComponent(index, component);
     }

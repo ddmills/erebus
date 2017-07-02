@@ -22,7 +22,7 @@ public sealed class WanderProcessor : TaskProcessor {
   private void PickNewGoal(GameEntity worker, TaskEntity wander) {
     var x = worker.position.x + Random.Range(-wander.range.max, wander.range.max);
     var z = worker.position.z + Random.Range(-wander.range.max, wander.range.max);
-    worker.ReplaceMoveTo(x, 0, z, .5f);
+    // worker.ReplaceMoveTo(x, 0, z, .5f);
   }
 
   private void Idle(GameEntity worker, TaskEntity wander) {

@@ -21,8 +21,15 @@ public sealed class PathFinder<T> where T : ICoordinate, new() {
       var current = estimatedCosts.Dequeue();
 
       if (current.Equals(goal)) {
-        var path = new List<T>(parents.Values);
-        path.Add(goal);
+        var path = new List<T> { current };
+
+        while (parents.ContainsKey(current)) {
+          current = parents[current];
+          path.Add(current);
+        }
+
+        path.Reverse();
+
         return path;
       }
 
@@ -36,12 +43,17 @@ public sealed class PathFinder<T> where T : ICoordinate, new() {
 
         var movementCost = weight(neighbour);
 
-        if (movementCost < 0 || closed.Contains(neighbour) || open.Contains(neighbour)) {
+        if (movementCost < 0) {
+          closed.Add(neighbour);
           continue;
         }
 
-        parents.Remove(current);
-        parents.Add(current, neighbour);
+        if (closed.Contains(neighbour) || open.Contains(neighbour)) {
+          continue;
+        }
+
+        parents.Remove(neighbour);
+        parents.Add(neighbour, current);
         movementCosts[neighbour] = movementCost;
         estimatedCosts.Enqueue(neighbour, movementCost + Heuristic(neighbour, goal));
         open.Add(neighbour);

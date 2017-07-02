@@ -3,7 +3,9 @@ using UnityEngine;
 using Entitas;
 
 public sealed class FollowPathSystem : ReactiveSystem<GameEntity> {
+  private readonly Config config;
   public FollowPathSystem(Contexts contexts) : base(contexts.game) {
+    config = contexts.game.config.value;
   }
 
   protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) {
@@ -19,7 +21,11 @@ public sealed class FollowPathSystem : ReactiveSystem<GameEntity> {
 
   protected override void Execute(List<GameEntity> entities) {
     entities.ForEach(entity => {
-      Debug.Log("start movin");
+      var goal = entity.path.tiles[entity.path.currentNodeIndex];
+      var x = goal.X * config.tileSize + config.tileSize * .5f;
+      var z = goal.Y * config.tileSize + config.tileSize * .5f;
+
+      entity.ReplaceMoveTo(x, 0, z, .25f);
     });
   }
 }

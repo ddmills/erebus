@@ -5,8 +5,8 @@ public sealed class InitColonistSystem : IInitializeSystem {
   }
 
   public void Initialize() {
-    ColonistBlueprint.Create(1, 1);
-    ColonistBlueprint.Create(4, 4);
-    ColonistBlueprint.Create(2, 5);
+    ColonistBlueprint.Create(1, 16);
+    ColonistBlueprint.Create(4, 22);
+    ColonistBlueprint.Create(2, 17);
   }
 }
