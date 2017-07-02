@@ -29,22 +29,22 @@ public class TileMap<T> where T : ICoordinate, new() {
     return x > Width || y > Height || x < 0 || y < 0;
   }
 
-  public T[] Neighbours(T tile) {
-    var neighbours = new T[8];
+  public T[] Neighbors(T tile) {
+    var neighbors = new T[8];
 
     var x = tile.X;
     var y = tile.Y;
 
-    neighbours[0] = Get(x - 1, y + 1);
-    neighbours[1] = Get(x, y + 1);
-    neighbours[2] = Get(x + 1, y + 1);
-    neighbours[3] = Get(x - 1, y);
-    neighbours[4] = Get(x + 1, y);
-    neighbours[5] = Get(x - 1, y - 1);
-    neighbours[6] = Get(x, y - 1);
-    neighbours[7] = Get(x + 1, y - 1);
+    neighbors[0] = Get(x - 1, y + 1);
+    neighbors[1] = Get(x, y + 1);
+    neighbors[2] = Get(x + 1, y + 1);
+    neighbors[3] = Get(x - 1, y);
+    neighbors[4] = Get(x + 1, y);
+    neighbors[5] = Get(x - 1, y - 1);
+    neighbors[6] = Get(x, y - 1);
+    neighbors[7] = Get(x + 1, y - 1);
 
-    return neighbours;
+    return neighbors;
   }
 
   public TileMap<T> ForEach(Action<T> callback) {

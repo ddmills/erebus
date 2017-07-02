@@ -36,27 +36,49 @@ public sealed class PathFinder<T> where T : ICoordinate, new() {
       open.Remove(current);
       closed.Add(current);
 
-      foreach (var neighbour in map.Neighbours(current)) {
-        if (neighbour == null) {
+      var neighbors = map.Neighbors(current);
+
+      if (weight(neighbors[1]) < 0) {
+        neighbors[0] = default(T);
+        neighbors[2] = default(T);
+      }
+
+      if (weight(neighbors[4]) < 0) {
+        neighbors[2] = default(T);
+        neighbors[7] = default(T);
+      }
+
+      if (weight(neighbors[6]) < 0) {
+        neighbors[7] = default(T);
+        neighbors[5] = default(T);
+      }
+
+      if (weight(neighbors[3]) < 0) {
+        neighbors[5] = default(T);
+        neighbors[0] = default(T);
+      }
+
+      foreach (var neighbor in neighbors) {
+        if (neighbor == null) {
           continue;
         }
 
-        var movementCost = weight(neighbour);
+        var movementCost = weight(neighbor);
 
         if (movementCost < 0) {
-          closed.Add(neighbour);
+          closed.Add(neighbor);
           continue;
         }
 
-        if (closed.Contains(neighbour) || open.Contains(neighbour)) {
+        if (closed.Contains(neighbor) || open.Contains(neighbor)) {
           continue;
         }
 
-        parents.Remove(neighbour);
-        parents.Add(neighbour, current);
-        movementCosts[neighbour] = movementCost;
-        estimatedCosts.Enqueue(neighbour, movementCost + Heuristic(neighbour, goal));
-        open.Add(neighbour);
+        parents.Remove(neighbor);
+        parents.Add(neighbor, current);
+        movementCosts[neighbor] = movementCost;
+        estimatedCosts.Enqueue(neighbor, movementCost + Heuristic(neighbor, goal));
+        open.Add(neighbor);
       }
     }
 
@@ -64,12 +86,8 @@ public sealed class PathFinder<T> where T : ICoordinate, new() {
   }
 
   private float Heuristic(T node, T goal) {
-    return Distance(node, goal);
-  }
-
-  private float Distance(T from, T to) {
-    var dX = (to.X - from.X);
-    var dY = (to.Y - from.Y);
-    return (float) Math.Sqrt(dX * dX + dY * dY);
+    var dX = (node.X - goal.X);
+    var dY = (node.Y - goal.Y);
+    return dX * dX + dY * dY;
   }
 }
