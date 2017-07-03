@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Entitas;
+using System;
 
-public sealed class UpdatePathSystem : ReactiveSystem<GameEntity> {
+public sealed class UpdatePathSystem : ReactiveSystem<GameEntity>, ICleanupSystem {
+  private readonly IGroup<GameEntity> completed;
+
   public UpdatePathSystem(Contexts contexts) : base(contexts.game) {
+    completed = contexts.game.GetGroup(GameMatcher.GoalReached);
   }
 
   protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) {
@@ -23,10 +27,17 @@ public sealed class UpdatePathSystem : ReactiveSystem<GameEntity> {
 
       if (currentIndex + 1 >= entity.path.tiles.Count) {
         entity.RemovePath();
+        entity.isGoalReached = true;
         return;
       }
 
       entity.ReplacePath(entity.path.tiles, currentIndex + 1);
     });
+  }
+
+  public void Cleanup() {
+    foreach (var entity in completed.GetEntities()) {
+      entity.isGoalReached = false;
+    }
   }
 }

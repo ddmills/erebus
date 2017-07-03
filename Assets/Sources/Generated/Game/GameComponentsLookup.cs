@@ -13,22 +13,23 @@ public static class GameComponentsLookup {
     public const int Config = 2;
     public const int Destroyed = 3;
     public const int Goal = 4;
-    public const int Id = 5;
-    public const int MoveToCompleted = 6;
-    public const int MoveTo = 7;
-    public const int OwnedByPlayer = 8;
-    public const int Path = 9;
-    public const int Position = 10;
-    public const int Scale = 11;
-    public const int SnappedToTile = 12;
-    public const int Speed = 13;
-    public const int Task = 14;
-    public const int TileMap = 15;
-    public const int Time = 16;
-    public const int View = 17;
-    public const int Worker = 18;
+    public const int GoalReached = 5;
+    public const int Id = 6;
+    public const int MoveToCompleted = 7;
+    public const int MoveTo = 8;
+    public const int OwnedByPlayer = 9;
+    public const int Path = 10;
+    public const int Position = 11;
+    public const int Scale = 12;
+    public const int SnappedToTile = 13;
+    public const int Speed = 14;
+    public const int Task = 15;
+    public const int TileMap = 16;
+    public const int Time = 17;
+    public const int View = 18;
+    public const int Worker = 19;
 
-    public const int TotalComponents = 19;
+    public const int TotalComponents = 20;
 
     public static readonly string[] componentNames = {
         "AbleToMove",
@@ -36,6 +37,7 @@ public static class GameComponentsLookup {
         "Config",
         "Destroyed",
         "Goal",
+        "GoalReached",
         "Id",
         "MoveToCompleted",
         "MoveTo",
@@ -58,6 +60,7 @@ public static class GameComponentsLookup {
         typeof(ConfigComponent),
         typeof(DestroyedComponent),
         typeof(GoalComponent),
+        typeof(GoalReachedComponent),
         typeof(IdComponent),
         typeof(MoveToCompletedComponent),
         typeof(MoveToComponent),

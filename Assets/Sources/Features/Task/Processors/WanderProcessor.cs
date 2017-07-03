@@ -7,7 +7,7 @@ public sealed class WanderProcessor : TaskProcessor {
   }
 
   public override void Process(GameEntity worker, TaskEntity wander) {
-    if (worker.isMoveToCompleted) {
+    if (worker.isGoalReached) {
       wander.ReplaceProgress(0, 2f);
     }
     if (wander.hasProgress) {
@@ -20,9 +20,17 @@ public sealed class WanderProcessor : TaskProcessor {
   }
 
   private void PickNewGoal(GameEntity worker, TaskEntity wander) {
-    var x = worker.position.x + Random.Range(-wander.range.max, wander.range.max);
-    var z = worker.position.z + Random.Range(-wander.range.max, wander.range.max);
-    // worker.ReplaceMoveTo(x, 0, z, .5f);
+    var game = Contexts.sharedInstance.game;
+    var x = (int) worker.position.x / game.config.value.tileSize;
+    var y = (int) worker.position.z / game.config.value.tileSize;
+
+    var tiles = game.tileMap.tiles.InRadius(x, y, 6, tile => !tile.hasMountain);
+
+    // TODO: if tiles is empty, task fails
+
+    var idx = Random.Range(0, tiles.Count);
+    var goal = tiles[idx];
+    worker.ReplaceGoal(goal.X, goal.Y);
   }
 
   private void Idle(GameEntity worker, TaskEntity wander) {
