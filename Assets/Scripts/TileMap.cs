@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public class TileMap<T> where T : ICoordinate, new() {
   public int Width { get; }
@@ -16,7 +17,7 @@ public class TileMap<T> where T : ICoordinate, new() {
   }
 
   public T Get(int x, int y) {
-    return OutOfBounds(x, y) ? default(T) : tiles[y, x];
+    return tiles[y, x];
   }
 
   public void Set(int x, int y, T tile) {
@@ -35,14 +36,14 @@ public class TileMap<T> where T : ICoordinate, new() {
     var x = tile.X;
     var y = tile.Y;
 
-    neighbors[0] = Get(x - 1, y + 1);
-    neighbors[1] = Get(x, y + 1);
-    neighbors[2] = Get(x + 1, y + 1);
-    neighbors[3] = Get(x - 1, y);
-    neighbors[4] = Get(x + 1, y);
-    neighbors[5] = Get(x - 1, y - 1);
-    neighbors[6] = Get(x, y - 1);
-    neighbors[7] = Get(x + 1, y - 1);
+    neighbors[0] = OutOfBounds(x - 1, y + 1) ? default(T) : Get(x - 1, y + 1);
+    neighbors[1] = OutOfBounds(x, y + 1) ? default(T) : Get(x, y + 1);
+    neighbors[2] = OutOfBounds(x + 1, y + 1) ? default(T) : Get(x + 1, y + 1);
+    neighbors[3] = OutOfBounds(x - 1, y) ? default(T) : Get(x - 1, y);
+    neighbors[4] = OutOfBounds(x + 1, y) ? default(T) : Get(x + 1, y);
+    neighbors[5] = OutOfBounds(x - 1, y - 1) ? default(T) : Get(x - 1, y - 1);
+    neighbors[6] = OutOfBounds(x, y - 1) ? default(T) : Get(x, y - 1);
+    neighbors[7] = OutOfBounds(x + 1, y - 1) ? default(T) : Get(x + 1, y - 1);
 
     return neighbors;
   }
@@ -65,5 +66,32 @@ public class TileMap<T> where T : ICoordinate, new() {
     }
 
     return this;
+  }
+
+  public List<T> InRadius(int x, int y, int radius, Func<T, bool> test) {
+    var nodes = new List<T>();
+    var radiusSquared = radius * radius;
+
+    for (var relX = -radius; relX <= radius; relX++) {
+      for (var relY = -radius; relY <= radius; relY++) {
+        var tileX = x + relX;
+        var tileY = y + relY;
+
+        if (OutOfBounds(tileX, tileY)) {
+          continue;
+        }
+
+        var node = Get(tileX, tileY);
+        var dX = node.X - x;
+        var dY = node.Y - y;
+        var distanceSquared = dX * dX + dY * dY;
+
+        if (distanceSquared <= radiusSquared && test(node)) {
+          nodes.Add(node);
+        }
+      }
+    }
+
+    return nodes;
   }
 }
