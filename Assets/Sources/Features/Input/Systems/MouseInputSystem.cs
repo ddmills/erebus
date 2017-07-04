@@ -39,13 +39,24 @@ public sealed class MouseInputSystem : IInitializeSystem, IExecuteSystem {
     var buttonId = (int) button;
 
     if (Input.GetMouseButtonDown(buttonId)) {
+      if (entity.hasMousePosition) {
+        entity.RemoveMousePosition();
+      }
+      if (entity.hasMouseUp) {
+        entity.RemoveMouseUp();
+      }
+
       entity.ReplaceMouseDown(x, y);
     }
     if (Input.GetMouseButton(buttonId)) {
-      entity.ReplaceMousePosition(x, y);
+      var prevX = entity.hasMousePosition ? entity.mousePosition.x : x;
+      var prevY = entity.hasMousePosition ? entity.mousePosition.y : y;
+      entity.ReplaceMousePosition(x, y, prevX, prevY);
     }
     if (Input.GetMouseButtonUp(buttonId)) {
       entity.ReplaceMouseUp(x, y);
+      entity.RemoveMouseDown();
+      entity.RemoveMousePosition();
     }
   }
 }

@@ -35,8 +35,9 @@ public sealed class CameraControlSystem : ReactiveSystem<InputEntity> {
   }
 
   protected override void Execute(List<InputEntity> entities) {
-    float mouseOffsetX = context.middleMouseEntity.mousePosition.x - previousX;
-    float mouseOffsetY = context.middleMouseEntity.mousePosition.y - previousY;
+    var mmb = context.middleMouseEntity;
+    float mouseOffsetX = mmb.mousePosition.x - mmb.mousePosition.previousX;
+    float mouseOffsetY = mmb.mousePosition.y - mmb.mousePosition.previousY;
 
     Vector3 direction = new Vector3(cameraHandle.forward.x, 0, cameraHandle.forward.z);
     direction.Normalize();
@@ -47,7 +48,7 @@ public sealed class CameraControlSystem : ReactiveSystem<InputEntity> {
     cameraHandle.Translate(right, Space.Self);
     cameraHandle.Translate(forward, Space.World);
 
-    previousX = context.middleMouseEntity.mousePosition.x;
-    previousY = context.middleMouseEntity.mousePosition.y;
+    previousX = mmb.mousePosition.x;
+    previousY = mmb.mousePosition.y;
   }
 }

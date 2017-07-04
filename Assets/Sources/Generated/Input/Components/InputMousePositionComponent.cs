@@ -11,19 +11,23 @@ public partial class InputEntity {
     public MousePositionComponent mousePosition { get { return (MousePositionComponent)GetComponent(InputComponentsLookup.MousePosition); } }
     public bool hasMousePosition { get { return HasComponent(InputComponentsLookup.MousePosition); } }
 
-    public void AddMousePosition(float newX, float newY) {
+    public void AddMousePosition(float newX, float newY, float newPreviousX, float newPreviousY) {
         var index = InputComponentsLookup.MousePosition;
         var component = CreateComponent<MousePositionComponent>(index);
         component.x = newX;
         component.y = newY;
+        component.previousX = newPreviousX;
+        component.previousY = newPreviousY;
         AddComponent(index, component);
     }
 
-    public void ReplaceMousePosition(float newX, float newY) {
+    public void ReplaceMousePosition(float newX, float newY, float newPreviousX, float newPreviousY) {
         var index = InputComponentsLookup.MousePosition;
         var component = CreateComponent<MousePositionComponent>(index);
         component.x = newX;
         component.y = newY;
+        component.previousX = newPreviousX;
+        component.previousY = newPreviousY;
         ReplaceComponent(index, component);
     }
 

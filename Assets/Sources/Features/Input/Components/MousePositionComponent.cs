@@ -4,4 +4,6 @@ using Entitas;
 public sealed class MousePositionComponent : IComponent {
   public float x;
   public float y;
+  public float previousX;
+  public float previousY;
 }
