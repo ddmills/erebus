@@ -1,6 +1,6 @@
 ﻿using Entitas;
 
-[Game]
+[Game, Task]
 public sealed class PositionComponent : IComponent {
   public float x;
   public float y;
