@@ -27,7 +27,7 @@ public class TileMap<T> where T : ICoordinate, new() {
   }
 
   public bool OutOfBounds(int x, int y) {
-    return x > Width || y > Height || x < 0 || y < 0;
+    return x >= Width || y >= Height || x < 0 || y < 0;
   }
 
   public T[] Neighbors(T tile) {
