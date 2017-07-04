@@ -29,7 +29,7 @@ public class QuadTree<T> where T : class {
   }
 
   public void Insert(Vector2 position) {
-    if (bounds.width < 1.1) {
+    if (bounds.width < 1.1f) {
       solid = true;
       return;
     }
@@ -81,24 +81,6 @@ public class QuadTree<T> where T : class {
     return res;
   }
 
-  public void DrawDebug() {
-    if (Filled()) {
-      Gizmos.DrawLine(new Vector3(bounds.x, 0, bounds.y), new Vector3(bounds.x, 0, bounds.y + bounds.height));
-      Gizmos.DrawLine(new Vector3(bounds.x, 0, bounds.y), new Vector3(bounds.x + bounds.width, 0, bounds.y));
-      Gizmos.DrawLine(new Vector3(bounds.x + bounds.width, 0, bounds.y), new Vector3(bounds.x + bounds.width, 0, bounds.y + bounds.height));
-      Gizmos.DrawLine(new Vector3(bounds.x, 0, bounds.y + bounds.height), new Vector3(bounds.x + bounds.width, 0, bounds.y + bounds.height));
-      return;
-    }
-
-    if (!isLeaf()) {
-      for (var i = 0; i < children.Length; i++) {
-        if (!children[i].isLeaf()) {
-          children[i].DrawDebug();
-        }
-      }
-    }
-  }
-
   public void Visualize() {
     if (Filled()) {
       if (cell == null) {
@@ -111,9 +93,7 @@ public class QuadTree<T> where T : class {
 
       if (!isLeaf()) {
         for (var i = 0; i < children.Length; i++) {
-          if (!children[i].isLeaf()) {
-            children[i].Visualize();
-          }
+          children[i].Visualize();
         }
       }
     }

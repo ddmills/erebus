@@ -17,12 +17,14 @@ public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<GameEnt
     for (var y = 0; y < mapSize; y++) {
       for (var x = 0; x < mapSize; x++) {
         if (Height(x, y) > .5f) {
-          terrain.Insert(new Vector2(x, y));
+          terrain.Insert(new Vector2(x + .5f, y + .5f));
           var tile = context.tileMap.tiles.Get(x, y);
           tile.hasMountain = true;
         }
       }
     }
+
+    terrain.Insert(new Vector2(.5f, .5f));
 
     terrain.Visualize();
   }
@@ -35,7 +37,7 @@ public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<GameEnt
     var mountain = context.CreateEntity();
 
     mountain.AddPosition(bounds.x + bounds.width / 2f, 0, bounds.y + bounds.height / 2f);
-    mountain.AddScale(bounds.width, 2f, bounds.height);
+    mountain.AddScale(bounds.width, 1f, bounds.height);
     mountain.AddAsset("Prefabs/Cube");
 
     return mountain;
