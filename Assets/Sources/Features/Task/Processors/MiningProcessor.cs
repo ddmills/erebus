@@ -16,8 +16,7 @@ public sealed class MiningProcessor : TaskProcessor {
   }
 
   private void MoveToMountain(GameEntity worker, TaskEntity task) {
-    var goalX = task.position.x;
-    var tiles = Contexts.sharedInstance.game.tileMap.tiles;
+    var tiles = Contexts.sharedInstance.game.map.value.Tiles;
 
     var tile = tiles.Get((int) task.position.x, (int) task.position.z);
     Tile nearby = null;
@@ -39,6 +38,7 @@ public sealed class MiningProcessor : TaskProcessor {
     task.ReplaceProgress(current, task.progress.max);
     if (task.progress.current >= task.progress.max) {
       task.isCompleted = true;
+      Contexts.sharedInstance.game.map.value.RemoveMountain((int) task.position.x, (int) task.position.z);
       task.RemoveProgress();
     }
   }

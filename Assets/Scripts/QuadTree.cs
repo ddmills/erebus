@@ -4,7 +4,7 @@ public class QuadTree<T> where T : class {
   private QuadTree<T>[] children;
   private bool solid = false;
   private Rect bounds;
-  private T cell;
+  private T visual;
   private CellRenderer<T> renderer;
 
   private QuadTree(CellRenderer<T> renderer, Rect bounds, bool root) {
@@ -28,7 +28,7 @@ public class QuadTree<T> where T : class {
     return (children[0].Filled() && children[1].Filled() && children[2].Filled() && children[3].Filled());
   }
 
-  public void Insert(Vector2 position) {
+  public void Insert(int x, int y) {
     if (bounds.width < 1.1f) {
       solid = true;
       return;
@@ -37,26 +37,27 @@ public class QuadTree<T> where T : class {
     if (isLeaf()) {
       var subWidth = (bounds.width / 2f);
       var subHeight = (bounds.height / 2f);
-      var x = bounds.x;
-      var y = bounds.y;
+      var subX = bounds.x;
+      var subY = bounds.y;
 
-      children[0] = new QuadTree<T>(renderer, new Rect(x + subWidth, y, subWidth, subHeight), false);
-      children[1] = new QuadTree<T>(renderer, new Rect(x, y, subWidth, subHeight), false);
-      children[2] = new QuadTree<T>(renderer, new Rect(x, y + subHeight, subWidth, subHeight), false);
-      children[3] = new QuadTree<T>(renderer, new Rect(x + subWidth, y + subHeight, subWidth, subHeight), false);
+      children[0] = new QuadTree<T>(renderer, new Rect(subX + subWidth, subY, subWidth, subHeight), false);
+      children[1] = new QuadTree<T>(renderer, new Rect(subX, subY, subWidth, subHeight), false);
+      children[2] = new QuadTree<T>(renderer, new Rect(subX, subY + subHeight, subWidth, subHeight), false);
+      children[3] = new QuadTree<T>(renderer, new Rect(subX + subWidth, subY + subHeight, subWidth, subHeight), false);
     }
 
-    var child = GetChildContaining(position);
+    var child = GetChildContaining(x, y);
     if (child != null) {
-      child.Insert(position);
+      child.Insert(x, y);
     }
   }
 
-  public void Remove(Vector2 position) {
+  public void Remove(int x, int y) {
+    var position = new Vector2(x, y);
     if (bounds.Contains(position)) {
       if (!isLeaf()) {
         for (var i = 0; i < children.Length; i++) {
-          children[i].Remove(position);
+          children[i].Remove(x, y);
         }
       } else {
         solid = false;
@@ -64,7 +65,8 @@ public class QuadTree<T> where T : class {
     }
   }
 
-  private QuadTree<T> GetChildContaining(Vector2 position) {
+  private QuadTree<T> GetChildContaining(int x, int y) {
+    var position = new Vector2(x, y);
     for (var i = 0; i < children.Length; i++) {
       if (children[i].bounds.Contains(position)) {
         return children[i];
@@ -81,19 +83,19 @@ public class QuadTree<T> where T : class {
     return res;
   }
 
-  public void Visualize() {
+  public void Render() {
     if (Filled()) {
-      if (cell == null) {
-        cell = renderer.RenderCell(bounds);
+      if (visual == null) {
+        visual = renderer.RenderCell(bounds);
       }
     } else {
-      if (cell != null) {
-        cell = null;
+      if (visual != null) {
+        renderer.RemoveCell(visual);
+        visual = null;
       }
-
-      if (!isLeaf()) {
-        for (var i = 0; i < children.Length; i++) {
-          children[i].Visualize();
+      for (var i = 0; i < children.Length; i++) {
+        if (children[i] != null) {
+          children[i].Render();
         }
       }
     }

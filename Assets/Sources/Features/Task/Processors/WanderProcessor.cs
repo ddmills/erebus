@@ -24,7 +24,7 @@ public sealed class WanderProcessor : TaskProcessor {
     var x = (int) worker.position.x / game.config.value.tileSize;
     var y = (int) worker.position.z / game.config.value.tileSize;
 
-    var tiles = game.tileMap.tiles.InRadius(x, y, 6, tile => !tile.hasMountain);
+    var tiles = game.map.value.Tiles.InRadius(x, y, 6, tile => !tile.hasMountain);
 
     // TODO: if tiles is empty, task fails
 

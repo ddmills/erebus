@@ -15,16 +15,16 @@ public static class GameComponentsLookup {
     public const int Goal = 4;
     public const int GoalReached = 5;
     public const int Id = 6;
-    public const int MoveToCompleted = 7;
-    public const int MoveTo = 8;
-    public const int OwnedByPlayer = 9;
-    public const int Path = 10;
-    public const int Position = 11;
-    public const int Scale = 12;
-    public const int SnappedToTile = 13;
-    public const int Speed = 14;
-    public const int Task = 15;
-    public const int TileMap = 16;
+    public const int Map = 7;
+    public const int MoveToCompleted = 8;
+    public const int MoveTo = 9;
+    public const int OwnedByPlayer = 10;
+    public const int Path = 11;
+    public const int Position = 12;
+    public const int Scale = 13;
+    public const int SnappedToTile = 14;
+    public const int Speed = 15;
+    public const int Task = 16;
     public const int Time = 17;
     public const int View = 18;
     public const int Worker = 19;
@@ -39,6 +39,7 @@ public static class GameComponentsLookup {
         "Goal",
         "GoalReached",
         "Id",
+        "Map",
         "MoveToCompleted",
         "MoveTo",
         "OwnedByPlayer",
@@ -48,7 +49,6 @@ public static class GameComponentsLookup {
         "SnappedToTile",
         "Speed",
         "Task",
-        "TileMap",
         "Time",
         "View",
         "Worker"
@@ -62,6 +62,7 @@ public static class GameComponentsLookup {
         typeof(GoalComponent),
         typeof(GoalReachedComponent),
         typeof(IdComponent),
+        typeof(MapComponent),
         typeof(MoveToCompletedComponent),
         typeof(MoveToComponent),
         typeof(OwnedByPlayerComponent),
@@ -71,7 +72,6 @@ public static class GameComponentsLookup {
         typeof(SnappedToTileComponent),
         typeof(SpeedComponent),
         typeof(TaskComponent),
-        typeof(TileMapComponent),
         typeof(TimeComponent),
         typeof(ViewComponent),
         typeof(WorkerComponent)

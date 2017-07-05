@@ -4,13 +4,13 @@ using Entitas;
 
 public sealed class PathfindingSystem : ReactiveSystem<GameEntity> {
   private readonly PathFinder<Tile> pathFinder;
-  private readonly TileMap<Tile> tiles;
+  private readonly Map map;
   private readonly Config config;
 
   public PathfindingSystem(Contexts contexts) : base(contexts.game) {
-    tiles = contexts.game.tileMap.tiles;
+    map = contexts.game.map.value;
     config = contexts.game.config.value;
-    pathFinder = new PathFinder<Tile>(tiles);
+    pathFinder = new PathFinder<Tile>(map.Tiles);
   }
 
   protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) {
@@ -29,8 +29,8 @@ public sealed class PathfindingSystem : ReactiveSystem<GameEntity> {
       var startX = (int) Math.Floor(entity.position.x / config.tileSize);
       var startY = (int) Math.Floor(entity.position.z / config.tileSize);
 
-      var goal = tiles.Get(goalX, goalY);
-      var start = tiles.Get(startX, startY);
+      var goal = map.GetTile(goalX, goalY);
+      var start = map.GetTile(startX, startY);
 
       if (start != null && goal != null) {
         var path = pathFinder.Find(start, goal, (from, to) => {

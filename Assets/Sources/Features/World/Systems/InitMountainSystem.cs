@@ -1,51 +1,29 @@
 using Entitas;
 using UnityEngine;
 
-public sealed class InitMountainSystem : IInitializeSystem, CellRenderer<GameEntity> {
-  private readonly GameContext context;
-  private QuadTree<GameEntity> terrain;
+public sealed class InitMountainSystem : IInitializeSystem {
+  private readonly Map map;
+  private readonly Config config;
 
   public InitMountainSystem(Contexts contexts) {
-    context = contexts.game;
+     map = contexts.game.map.value;
+     config = contexts.game.config.value;
   }
 
   public void Initialize() {
-    var mapSize = context.config.value.mapSize;
-
-    terrain = new QuadTree<GameEntity>(this, new Rect(0, 0, mapSize, mapSize));
-
-    for (var y = 0; y < mapSize; y++) {
-      for (var x = 0; x < mapSize; x++) {
+    for (var y = 0; y < map.Size; y++) {
+      for (var x = 0; x < map.Size; x++) {
         if (Height(x, y) > .5f) {
-          terrain.Insert(new Vector2(x + .5f, y + .5f));
-          var tile = context.tileMap.tiles.Get(x, y);
-          tile.hasMountain = true;
+          map.AddMountain(x, y);
         }
       }
     }
-
-    terrain.Insert(new Vector2(.5f, .5f));
-
-    terrain.Visualize();
-  }
-
-  public void RemoveCell(GameEntity cell) {
-    cell.isDestroyed = true;
-  }
-
-  public GameEntity RenderCell(Rect bounds) {
-    var mountain = context.CreateEntity();
-
-    mountain.AddPosition(bounds.x + bounds.width / 2f, 0, bounds.y + bounds.height / 2f);
-    mountain.AddScale(bounds.width, 1f, bounds.height);
-    mountain.AddAsset("Prefabs/Cube");
-
-    return mountain;
+    map.mountains.Render();
   }
 
   private float Height(float x, float y) {
-    var perlinX = context.config.value.seed + 1000 + x / 15f;
-    var perlinY = context.config.value.seed + 1000 + y / 15f;
+    var perlinX = config.seed + 1000 + x / 15f;
+    var perlinY = config.seed + 1000 + y / 15f;
     return Mathf.PerlinNoise(perlinX, perlinY);
   }
 }
