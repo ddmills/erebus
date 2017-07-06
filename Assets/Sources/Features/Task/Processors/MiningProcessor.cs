@@ -22,7 +22,7 @@ public sealed class MiningProcessor : TaskProcessor {
     Tile nearby = null;
 
     foreach (var neighbor in tiles.Neighbors(tile)) {
-      if (!neighbor.hasMountain) {
+      if (neighbor != null && !neighbor.hasMountain) {
         nearby = neighbor;
         break;
       }

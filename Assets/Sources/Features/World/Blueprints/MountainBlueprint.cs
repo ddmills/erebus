@@ -7,7 +7,7 @@ public sealed class MountainBlueprint {
 
     mountain.AddPosition(bounds.x + bounds.width / 2f, 0, bounds.y + bounds.height / 2f);
     mountain.AddScale(bounds.width, 1f, bounds.height);
-    mountain.AddAsset("Prefabs/Cube");
+    mountain.AddAsset("Prefabs/Mountain");
 
     return mountain;
   }
