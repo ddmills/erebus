@@ -16,7 +16,10 @@ public sealed class FollowPathSystem : ReactiveSystem<GameEntity> {
   }
 
   protected override bool Filter(GameEntity entity) {
-    return entity.hasPath && entity.isAbleToMove;
+    return entity.hasPath
+      && entity.isAbleToMove
+      && entity.path.tiles.Count > 0
+      && entity.path.currentNodeIndex >= 0;
   }
 
   protected override void Execute(List<GameEntity> entities) {

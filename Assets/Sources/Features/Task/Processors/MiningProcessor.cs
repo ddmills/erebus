@@ -12,7 +12,20 @@ public sealed class MiningProcessor : TaskProcessor {
     }
   }
   public override bool CanBeWorkedBy(GameEntity worker, TaskEntity task) {
-    return worker.isAbleToMove && (task.workers.ids.Count == 0 || task.workers.ids.Contains(worker.id.value));
+    return worker.isAbleToMove
+      && (task.workers.ids.Count == 0 || task.workers.ids.Contains(worker.id.value))
+      && isReachable(task);
+  }
+
+  private bool isReachable(TaskEntity task) {
+    var tiles = Contexts.sharedInstance.game.map.value.Tiles;
+    var neighbors = tiles.Neighbors((int) task.position.x, (int) task.position.z);
+    foreach (var neighbor in neighbors) {
+      if (neighbor != null && !neighbor.hasMountain) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private void MoveToMountain(GameEntity worker, TaskEntity task) {

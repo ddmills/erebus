@@ -30,11 +30,8 @@ public class TileMap<T> where T : ICoordinate, new() {
     return x >= Width || y >= Height || x < 0 || y < 0;
   }
 
-  public T[] Neighbors(T tile) {
+  public T[] Neighbors(int x, int y) {
     var neighbors = new T[8];
-
-    var x = tile.X;
-    var y = tile.Y;
 
     neighbors[0] = OutOfBounds(x - 1, y + 1) ? default(T) : Get(x - 1, y + 1);
     neighbors[1] = OutOfBounds(x, y + 1) ? default(T) : Get(x, y + 1);
@@ -44,6 +41,24 @@ public class TileMap<T> where T : ICoordinate, new() {
     neighbors[5] = OutOfBounds(x - 1, y - 1) ? default(T) : Get(x - 1, y - 1);
     neighbors[6] = OutOfBounds(x, y - 1) ? default(T) : Get(x, y - 1);
     neighbors[7] = OutOfBounds(x + 1, y - 1) ? default(T) : Get(x + 1, y - 1);
+
+    return neighbors;
+  }
+
+  public T[] Neighbors(T tile) {
+    return Neighbors(tile.X, tile.Y);
+  }
+
+  public T[] ImmediateNeighbors(T tile) {
+    var neighbors = new T[3];
+
+    var x = tile.X;
+    var y = tile.Y;
+
+    neighbors[0] = OutOfBounds(x, y + 1) ? default(T) : Get(x, y + 1);
+    neighbors[1] = OutOfBounds(x - 1, y) ? default(T) : Get(x - 1, y);
+    neighbors[2] = OutOfBounds(x + 1, y) ? default(T) : Get(x + 1, y);
+    neighbors[3] = OutOfBounds(x, y - 1) ? default(T) : Get(x, y - 1);
 
     return neighbors;
   }
